@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Career Navigator | Find Your Path at Hocking College</title>
+<style>
+:root{--ink:#fff;--gold:#f2c14e}
+*{box-sizing:border-box}body{margin:0;font:17px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);min-height:100vh;overflow-x:hidden;transition:background 1s}
+.bg-sunrise{background:linear-gradient(180deg,#ff9a62,#f6c667 45%,#5a8f5e)}
+.bg-forest{background:linear-gradient(180deg,#1f4d2c,#2f6b3a 50%,#173823)}
+.bg-creek{background:linear-gradient(180deg,#2d6f8f,#3f9a8a 55%,#1d4a3a)}
+.bg-trail{background:linear-gradient(180deg,#7a8fa6,#6f7f57 55%,#3d4a2f)}
+.bg-home{background:linear-gradient(180deg,#6a4c93,#a36cb0 55%,#3b2a57)}
+.bg-kitchen{background:linear-gradient(180deg,#c4602f,#e8944a 55%,#6b2f17)}
+.bg-tech{background:linear-gradient(180deg,#0b1030,#22205a 55%,#060818)}
+.bg-results{background:linear-gradient(180deg,#14482b,#0f3320)}
+.wrap{max-width:900px;margin:0 auto;padding:28px 20px 60px}
+header{display:flex;justify-content:space-between;align-items:center}
+.brand{font-weight:800;letter-spacing:.06em}.brand span{color:var(--gold)}
+.trail{display:flex;gap:6px;font-size:22px;min-height:32px}
+.trail span{animation:pop .4s}
+.art{font-size:clamp(54px,12vw,96px);text-align:center;margin:30px 0 10px;letter-spacing:.15em;filter:drop-shadow(0 6px 12px rgba(0,0,0,.35))}
+.art span{display:inline-block;animation:float 3s ease-in-out infinite}
+.story{background:rgba(0,0,0,.35);backdrop-filter:blur(6px);border-radius:20px;padding:24px 28px;font-size:22px;font-weight:600;min-height:96px}
+.choices{display:grid;gap:14px;margin-top:20px}
+.choice{display:flex;gap:16px;align-items:center;text-align:left;background:rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.35);color:var(--ink);border-radius:16px;padding:16px 20px;font-size:18px;cursor:pointer;transition:transform .15s,background .15s;animation:rise .45s both}
+.choice:hover,.choice:focus{transform:translateY(-3px) scale(1.01);background:rgba(0,0,0,.45);outline:none;border-color:var(--gold)}
+.choice .i{font-size:34px}
+.btn{display:inline-block;background:var(--gold);color:#1b2a12;font-weight:800;border:0;border-radius:999px;padding:14px 26px;font-size:17px;cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid rgba(255,255,255,.5)}
+.hero{text-align:center;padding-top:40px}.hero h1{font-size:clamp(34px,7vw,56px);line-height:1.1;margin:10px 0}
+.match{background:#fff;color:#1b2430;border-radius:22px;padding:28px;margin-top:20px;animation:rise .6s both;border-top:10px solid var(--c)}
+.match h2{margin:6px 0;font-size:30px}.match .ic{font-size:64px}
+.pct{display:inline-block;background:var(--c);color:#fff;border-radius:999px;padding:4px 14px;font-weight:700;font-size:14px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:14px}
+.job{background:#f3f5f7;border-radius:12px;padding:10px 14px;margin-bottom:8px}.job b{display:block}
+ul{padding-left:20px;margin:6px 0}
+.minis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:16px}
+.mini{background:rgba(255,255,255,.14);border:2px solid rgba(255,255,255,.25);border-radius:14px;padding:14px;cursor:pointer;color:var(--ink);text-align:left;font-size:15px}
+.mini:hover{border-color:var(--gold)}.mini .ic{font-size:32px}
+.bar{height:8px;background:rgba(255,255,255,.2);border-radius:999px;margin-top:8px;overflow:hidden}.bar i{display:block;height:100%;background:var(--gold)}
+@keyframes float{50%{transform:translateY(-10px)}}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}}
+@keyframes pop{from{transform:scale(0)}}
+@media(max-width:640px){.cols{grid-template-columns:1fr}.story{font-size:19px}}
+</style>
+</head>
+<body class="bg-sunrise">
+<div class="wrap">
+  <header><div class="brand">HOCKING COLLEGE <span>CAREER NAVIGATOR</span></div><div class="trail" id="trail" aria-label="Your path so far"></div></header>
+  <main id="app" aria-live="polite"></main>
+</div>
+<script src="data.js"></script>
+<script>
+const app=document.getElementById('app'),trail=document.getElementById('trail');
+let picked=[];
+const setBg=b=>document.body.className='bg-'+b;
+const art=s=>[...s].length?Array.from(new Intl.Segmenter().segment(s),x=>x.segment).map((e,k)=>`<span style="animation-delay:${k*.3}s">${e}</span>`).join(''):'';
+
+function welcome(){
+  picked=[];trail.innerHTML='';setBg('sunrise');
+  app.innerHTML=`<div class="hero"><div class="art">${art('🧭🌲🍳🩺💻')}</div>
+   <h1>What could your future look like?</h1>
+   <p style="font-size:20px;max-width:600px;margin:0 auto 26px">Make choices in a story about a day off. Every choice shapes your path, and at the end we will show you the Hocking College programs and careers that fit you best.</p>
+   <button class="btn" id="go">Start my adventure</button> <button class="btn ghost" id="all">Just show me the programs</button></div>`;
+  go.onclick=()=>scene('start');all.onclick=()=>results(true);
+}
+function type(el,text,cb){let k=0;el.textContent='';const t=setInterval(()=>{el.textContent=text.slice(0,++k);if(k>=text.length){clearInterval(t);cb()}},18)}
+function scene(id){
+  const S=SCENES[id];setBg(S.bg);
+  app.innerHTML=`<div class="art">${art(S.art)}</div><div class="story" id="st"></div><div class="choices" id="ch"></div>`;
+  type(st,S.text,()=>{ch.innerHTML=S.choices.map((c,k)=>`<button class="choice" style="animation-delay:${k*.12}s" data-k="${k}"><span class="i">${c.icon}</span>${c.label}</button>`).join('');
+    ch.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{const c=S.choices[b.dataset.k];picked.push(...c.tags);trail.insertAdjacentHTML('beforeend',`<span>${c.icon}</span>`);c.next==='end'?results():scene(c.next)})});
+}
+function rank(){
+  return PROGRAMS.map(p=>{const s=picked.reduce((n,t)=>n+(p.tags.includes(t)?1:0),0);return{p,s}}).sort((a,b)=>b.s-a.s);
+}
+function card(p,pct){return`<div class="match" style="--c:${p.color}"><div class="ic">${p.icon}</div>${pct!=null?`<span class="pct">${pct}% match</span>`:''}<h2>${p.name}</h2><p>${p.pitch}</p>
+ <div class="cols"><div><h3>What you'll do</h3><ul>${p.doing.map(d=>`<li>${d}</li>`).join('')}</ul></div>
+ <div><h3>Careers you could have</h3>${p.careers.map(c=>`<div class="job"><b>${c.title}</b>${c.what}</div>`).join('')}</div></div>
+ <p style="margin-top:16px"><a class="btn" style="background:${p.color};color:#fff" href="https://www.hocking.edu/programs" target="_blank" rel="noopener">Learn more at hocking.edu</a></p></div>`}
+function results(browse){
+  setBg('results');const R=rank(),max=Math.max(1,picked.length);
+  const show=id=>{const r=R.find(x=>x.p.id===id);document.getElementById('detail').innerHTML=card(r.p,browse?null:Math.round(r.s/max*100));document.getElementById('detail').scrollIntoView({behavior:'smooth'})};
+  app.innerHTML=`<div class="hero" style="padding-top:20px"><h1>${browse?'Explore Hocking programs':'Your best match'}</h1>${browse?'':'<p>Based on the choices you made.</p>'}</div>
+   <div id="detail"></div>
+   <h3 style="margin-top:30px">${browse?'Tap a program':'Other programs to explore'}</h3>
+   <div class="minis">${R.map(r=>`<button class="mini" data-id="${r.p.id}"><div class="ic">${r.p.icon}</div><b>${r.p.name}</b>${browse?'':`<div class="bar"><i style="width:${Math.round(r.s/max*100)}%"></i></div>`}</button>`).join('')}</div>
+   <p style="margin-top:30px;text-align:center"><button class="btn" id="again">Play again</button></p>`;
+  app.querySelectorAll('.mini').forEach(b=>b.onclick=()=>show(b.dataset.id));again.onclick=welcome;
+  show(R[0].p.id);if(browse)document.getElementById('detail').innerHTML='';
+}
+welcome();
+</script>
+</body>
+</html>
