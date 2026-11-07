@@ -1,38 +1,20 @@
 # Sojourner Labs
 
-Landing page, interactive training demo, and sales proposal for a B2B workforce training offer covering cybersecurity awareness, AI awareness, and compliance. Hosted free on GitHub Pages.
+Website, escape room training missions, and sales proposal for Sojourner Labs, which sells cybersecurity awareness, AI awareness, and compliance training to small and midsize businesses. Hosted free on GitHub Pages.
 
-## Files
+## Pages
+- `index.html` landing page with risk check, pricing calculator, founder bio, FAQ
+- `missions.html` mission catalog
+- `missions/*.html` five missions: The Brightline Breach (free demo), Voice of the CEO, The AI Policy, Locked Out, The First Hour
+- `onboarding.html`, `contact.html`, `verify.html`, `terms.html`, `privacy.html`
+- `proposal.md` sales proposal template
 
-| File | Purpose |
-|---|---|
-| `index.html` | Landing page: offering, about, founder bio, pricing, call to action |
-| `training.html` | The three-part locked escape room plus printable completion certificate |
-| `proposal.md` | Sales proposal template to send to prospective clients |
-| `assets/styles.css` | Shared styling for both pages |
+## Settings
+Edit `assets/config.js` to add your business email, Stripe Payment Links, and a form endpoint (for example Formspree) that receives completion records and contact messages.
 
-## Before You Share the Site
+## Customer links
+Give each customer `https://hush1e.github.io/sojourner-labs/missions.html?org=CompanyName` style links. Add `?org=CompanyName` to any mission URL to prefill the company on certificates.
 
-1. Replace `PAYMENT_LINK` in `index.html` with a Stripe Payment Link.
-2. Replace `CONTACT_EMAIL` in `index.html` with a business email address.
-3. Confirm the brand name and check that it is not already in use (search the USPTO trademark database and your state business registry).
-4. Review your employer's outside employment and conflict of interest policy.
+Answers are stored only as SHA-256 hashes. The mission source with plain answers is kept out of this public repository on purpose.
 
-## Turning On GitHub Pages
-
-Settings, then Pages, then under "Build and deployment" choose **Deploy from a branch**, branch `main`, folder `/ (root)`, and Save. The site appears at `https://<username>.github.io/<repo-name>/` within a few minutes.
-
-## Changing a Puzzle Answer
-
-Answers are stored as SHA-256 hashes in `training.html` (the `KEYS` object) so they cannot be read in the page source. To change an answer, hash the new answer in lowercase and paste the result in. Any online SHA-256 tool works, or in a browser console:
-
-```js
-crypto.subtle.digest("SHA-256", new TextEncoder().encode("new-answer"))
-  .then(b => console.log([...new Uint8Array(b)].map(x => x.toString(16).padStart(2,"0")).join("")))
-```
-
-The answer key is kept out of this public repository on purpose.
-
-## Known Limits
-
-The locks run in the browser, so they prevent skipping ahead but are not a security control. Completion certificates are generated on the employee's screen and are not recorded centrally. If clients need verified completion tracking, the next step is adding a form submission (for example Google Forms or Formspree) on the certificate page.
+© 2026 Sojourner Labs. All rights reserved. See LICENSE.

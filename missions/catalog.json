@@ -1,0 +1,42 @@
+[
+ {
+  "slug": "brightline-breach",
+  "title": "The Brightline Breach",
+  "topic": "Security Essentials",
+  "minutes": 20,
+  "blurb": "Day one at Brightline Supply Co. goes sideways. Find the phish, protect customer data, and stop an intruder.",
+  "rooms": 5
+ },
+ {
+  "slug": "voice-of-the-ceo",
+  "title": "Voice of the CEO",
+  "topic": "AI Threats",
+  "minutes": 15,
+  "blurb": "A call that sounds exactly like your CEO asks for an urgent wire. Learn to beat deepfake voice and video scams.",
+  "rooms": 4
+ },
+ {
+  "slug": "the-ai-policy",
+  "title": "The AI Policy",
+  "topic": "AI Awareness",
+  "minutes": 15,
+  "blurb": "Your team loves AI tools. Decide what is safe to share, spot a hallucination, and help write the rules.",
+  "rooms": 4
+ },
+ {
+  "slug": "locked-out",
+  "title": "Locked Out",
+  "topic": "Account Security",
+  "minutes": 12,
+  "blurb": "Passwords, MFA prompts, and a suspicious login. Keep the company's accounts in the right hands.",
+  "rooms": 4
+ },
+ {
+  "slug": "first-hour",
+  "title": "The First Hour",
+  "topic": "Compliance and Incident Response",
+  "minutes": 15,
+  "blurb": "Ransomware hits a small business. What happens in the first hour decides how bad it gets.",
+  "rooms": 4
+ }
+]

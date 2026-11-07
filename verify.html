@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Verify a Certificate | Sojourner Labs</title><link rel="stylesheet" href="assets/styles.css"></head>
+<body><nav class="noprint"><div class="wrap">
+  <a class="logo" href="index.html"><svg viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#7c9cff"/><stop offset="1" stop-color="#38e1c6"/></linearGradient></defs><circle cx="16" cy="16" r="14" fill="none" stroke="url(#g)" stroke-width="2.5"/><path d="M8 20 Q16 6 24 20" fill="none" stroke="url(#g)" stroke-width="2.5"/><circle cx="16" cy="12" r="2.5" fill="#38e1c6"/></svg>SOJOURNER LABS</a>
+  <ul><li><a href="missions.html">Missions</a></li><li><a href="index.html#pricing">Pricing</a></li><li><a href="onboarding.html">How It Works</a></li><li><a href="index.html#about">About</a></li><li><a href="contact.html">Contact</a></li></ul>
+  <a class="btn" href="missions/brightline-breach.html">Try the demo</a>
+</div></nav>
+<main class="wrap page"><h1>Verify a certificate</h1><p class="sub">Enter the code printed on a Sojourner Labs certificate.</p>
+<div class="card" style="max-width:620px"><p><input class="field" id="c" placeholder="SJL-20261107-BB-ABCDE"></p><button class="btn" id="b">Check</button><div class="msg" id="m"></div>
+<p class="sub" style="margin-top:16px">This check confirms the code is correctly formed. For a full record of who completed which mission, license holders can request their completion report.</p></div></main>
+<footer><div class="wrap">© 2026 Sojourner Labs. All rights reserved. · <a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a> · <a href="verify.html">Verify a certificate</a> · <a href="contact.html">Contact</a></div></footer>
+<script src="assets/config.js"></script><script>
+function check36(s){let n=0;for(const ch of s)n=(n*31+ch.charCodeAt(0))%36;return n.toString(36).toUpperCase()}
+const T={BB:'The Brightline Breach',DV:'Voice of the CEO',AI:'The AI Policy',PW:'Locked Out',IR:'The First Hour'};
+document.getElementById('b').onclick=()=>{const c=document.getElementById('c').value.trim().toUpperCase(),m=document.getElementById('m');
+const x=c.match(/^SJL-(\d{4})(\d{2})(\d{2})-([A-Z]{2})-([A-Z0-9]{5})$/);
+if(x&&T[x[4]]&&check36(c.slice(0,-1))===c.slice(-1)){m.className='msg ok';m.textContent='Valid format. Mission: '+T[x[4]]+', issued '+x[2]+'/'+x[3]+'/'+x[1]+'.'}
+else{m.className='msg no';m.textContent='This code does not match a Sojourner Labs certificate.'}};
+</script>
+</body></html>
