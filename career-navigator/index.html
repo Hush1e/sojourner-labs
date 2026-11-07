@@ -206,7 +206,7 @@ function scene(id){
  type($('#st'),S.text.map(fill),()=>choices(S));
 }
 function choices(S,after){
- const ch=$('#ch');ch.classList.toggle('many',S.choices.length>8);
+ const ch=$('#ch');ch.classList.toggle('many',S.choices.length>4);
  ch.innerHTML=S.choices.map((c,k)=>`<button class="choice" style="animation-delay:${k*.1}s" data-k="${k}"><span class="i">${c.icon}</span>${fill(c.label)}</button>`).join('');
  ch.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
   const c=S.choices[b.dataset.k];
