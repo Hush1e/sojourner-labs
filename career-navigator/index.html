@@ -81,6 +81,10 @@ header{display:flex;justify-content:space-between;align-items:center;gap:12px;fl
 .dnav .ghost{color:#1b2430;border-color:#c9ced6}
 .dnav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:12px 0 16px}.dnav .btn:disabled{opacity:.35;cursor:default}
 .ddots{display:flex;gap:8px}.ddot{width:14px;height:14px;border-radius:50%;border:2px solid var(--c);background:#fff;cursor:pointer;padding:0}.ddot.on{background:var(--c)}
+.opps{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.opp{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:14px;border:2px solid #e6e9ee;background:#f8fafc;color:#1b2430!important;text-decoration:none;font-weight:400;transition:transform .15s,border-color .15s}
+.opp:hover{transform:translateY(-2px);border-color:var(--c)}.oi{font-size:30px;flex:none}
+.opp .small{font-weight:400;display:block;margin-top:4px}.ok{display:table;font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:#fff;background:var(--c);border-radius:999px;padding:2px 8px;margin-bottom:4px}
 .dl .step{display:flex;gap:14px;align-items:flex-start}
 .sky{flex:none;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:24px}
 #report{display:none}
@@ -127,6 +131,7 @@ input[type=range]{width:100%;accent-color:#2f6b3a}
 <script src="athletics.js"></script>
 <script src="cert-links.js"></script>
 <script src="videos.js"></script>
+<script src="ohio.js"></script>
 <script>
 const app=document.getElementById('app'),K=Object.keys(RIASEC);
 let score,boost={},fscore={},badges=[],name='',steps=0;
@@ -257,6 +262,8 @@ function card(p,pct){
   <div class="pay"><div class="paybar base" data-w="${Math.round(49500/max*100)}"></div><div class="small">${$$(49500)} median for all U.S. jobs (May 2024)</div></div></div>
  <div class="pane"><p>Credentials students work toward in this program:</p>${p.certs.map(c=>{const u=certLink(c);return u?`<a class="cert" style="text-decoration:none;color:#1b2430" href="${u}" target="_blank" rel="noopener">🏅 ${c} ↗</a>`:`<span class="cert">🏅 ${c}</span>`}).join('')}<p class="small" style="margin-top:12px">Tap a credential with ↗ to see its official page. Check the program page for the current list.</p></div>
  <div class="pane"><h3>How in demand is it?</h3><div class="meter5">${[1,2,3,4,5].map(n=>`<i class="${n<=p.demand.level?'on':''}"></i>`).join('')}</div><p><b>${p.demand.label}.</b> ${p.demand.why}</p>
+  <h3>Ohio's Top Jobs List</h3>${OHIO.crit(p.id)?`<p><span class="cert" style="border-color:#c0392b;background:#fdecea">🔴 Ohio Critical Job area: ${OHIO.crit(p.id)}</span></p><p>The State of Ohio names these jobs as critical to the health and well being of Ohioans, and puts extra training money toward them.</p>`:`<p>Ohio ranks jobs it needs most as <b>In-Demand</b> or <b>Critical</b>.</p>`}<p><a href="${OHIO.TOP}" target="_blank" rel="noopener">Look up this career on Ohio's Top Jobs List ↗</a></p>
+  <h3>Ohio opportunities for you</h3><div class="opps">${OHIO.opps(p.id).map(o=>`<a class="opp" href="${o.url}" target="_blank" rel="noopener"><span class="oi">${o.icon}</span><span><span class="ok">${o.kind}</span><b>${o.title} ↗</b><br><span class="small">${o.what}</span></span></a>`).join('')}</div><p class="small">Amounts and rules change each year. Confirm with Hocking College financial aid.</p>
   <h3>Southeast Ohio</h3><p>${p.region.url?`<a href="${p.region.url}" target="_blank" rel="noopener">${p.region.stat}</a>`:`${p.region.stat} <span class="small">(${p.region.year})</span>`}</p>
   <p><a class="btn" style="background:${p.color};color:#fff" href="${p.jobs}" target="_blank" rel="noopener">See current job openings near Hocking</a></p>
   <p class="small">Opens a live job search within 50 miles of Nelsonville. Also try <a href="https://topjobs.ohio.gov" target="_blank" rel="noopener">Ohio's Top Jobs</a> and <a href="https://ohiomeansjobs.ohio.gov" target="_blank" rel="noopener">OhioMeansJobs</a>.</p></div>
