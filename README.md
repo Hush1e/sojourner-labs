@@ -1,4 +1,4 @@
-# Vanguard Cyber Labs: Workforce Risk Shield
+# Sojourner Labs
 
 Landing page, interactive training demo, and sales proposal for a B2B workforce training offer covering cybersecurity awareness, AI awareness, and compliance. Hosted free on GitHub Pages.
 

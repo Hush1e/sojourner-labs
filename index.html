@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sojourner Labs | Immersive Security, AI, and Compliance Training</title>
+<meta name="description" content="Escape room style cybersecurity, AI awareness, and compliance training for small and midsize businesses.">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<nav><div class="wrap">
+  <a class="logo" href="#"><svg viewBox="0 0 32 32"><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#7c9cff"/><stop offset="1" stop-color="#38e1c6"/></linearGradient></defs><circle cx="16" cy="16" r="14" fill="none" stroke="url(#g)" stroke-width="2.5"/><path d="M8 20 Q16 6 24 20" fill="none" stroke="url(#g)" stroke-width="2.5"/><circle cx="16" cy="12" r="2.5" fill="#38e1c6"/></svg>SOJOURNER LABS</a>
+  <ul><li><a href="#what">Training</a></li><li><a href="#risk">Risk Check</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#about">About</a></li><li><a href="#faq">FAQ</a></li></ul>
+  <a class="btn" href="training.html">Try the demo</a>
+</div></nav>
+
+<header class="hero">
+  <canvas id="net"></canvas>
+  <div class="wrap">
+    <h1>Training your team will <span>actually finish.</span></h1>
+    <p>Sojourner Labs turns cybersecurity, AI awareness, and compliance into short escape room missions. Your employees solve real scenarios, unlock each stage, and walk away with a certificate and habits that stick.</p>
+    <div class="cta"><a class="btn" href="training.html">Play the free mission</a><a class="btn ghost" href="#pricing">See pricing</a></div>
+  </div>
+</header>
+
+<section id="what"><div class="wrap">
+  <h2>Three skills. One mission.</h2>
+  <p class="sub">Every module is locked until the learner proves the skill. No clicking through slides to get to the quiz.</p>
+  <div class="grid">
+    <div class="card"><div class="ico">🎣</div><h3>Spot the phish</h3><p>Learners inspect a realistic email and find the detail that gives the attacker away.</p></div>
+    <div class="card"><div class="ico">🤖</div><h3>Use AI safely</h3><p>Learners decide which AI prompts are safe to send and which leak customer or company data.</p></div>
+    <div class="card"><div class="ico">📋</div><h3>Handle data right</h3><p>Learners choose how to respond when sensitive data has to move, matching common compliance expectations.</p></div>
+    <div class="card"><div class="ico">🏅</div><h3>Prove completion</h3><p>Each learner earns a printable certificate with a unique code for your records and insurance carrier.</p></div>
+  </div>
+</div></section>
+
+<section id="risk"><div class="wrap">
+  <h2>60 second risk check</h2>
+  <p class="sub">Check what is true for your business today.</p>
+  <div id="checks">
+    <div class="q"><label><input type="checkbox" data-w="20">Employees use personal email or phones for work.</label></div>
+    <div class="q"><label><input type="checkbox" data-w="20">People paste work content into ChatGPT or other AI tools.</label></div>
+    <div class="q"><label><input type="checkbox" data-w="20">We have not run security training in the last 12 months.</label></div>
+    <div class="q"><label><input type="checkbox" data-w="20">We store customer names, addresses, or payment details.</label></div>
+    <div class="q"><label><input type="checkbox" data-w="20">Our cyber insurance asks whether we train staff.</label></div>
+  </div>
+  <div class="meter"><i id="bar"></i></div>
+  <p id="riskText" class="sub">Your exposure: Low</p>
+</div></section>
+
+<section id="pricing"><div class="wrap">
+  <h2>Simple pricing</h2>
+  <p class="sub">Slide to your team size. Annual license, every module included, unlimited replays.</p>
+  <input type="range" id="seats" min="1" max="250" value="20">
+  <p><strong id="seatLabel">20 employees</strong></p>
+  <div class="price" id="priceOut">$599<span style="font-size:18px;color:var(--mute)"> / year</span></div>
+  <div class="grid tiers">
+    <div class="card" data-t="1"><h3>Starter</h3><p>Up to 15 employees<br><strong>$249 / year</strong></p></div>
+    <div class="card" data-t="2"><h3>Team</h3><p>Up to 50 employees<br><strong>$599 / year</strong></p></div>
+    <div class="card" data-t="3"><h3>Growth</h3><p>51 to 250 employees<br><strong>$12 per employee / year</strong></p></div>
+  </div>
+  <p class="sub" style="margin-top:24px">Add a live workshop led by the founder for $750.</p>
+  <a class="btn" href="mailto:hush1end@gmail.com?subject=Sojourner%20Labs%20License">Get started</a>
+</div></section>
+
+<section id="about"><div class="wrap">
+  <h2>Meet the founder</h2>
+  <div class="bio">
+    <div class="avatar">ND</div>
+    <div>
+      <p>Norma DePriest is the Program Director of Cybersecurity at a public college in Ohio, where she rebuilt all 14 courses in the cybersecurity program in 2024 and designed the college's new AI certificate. She serves on the Ohio Department of Higher Education OGTP Cybersecurity Committee and leads an employer advisory partnership that keeps her curriculum tied to what local businesses need. Her work sits at the meeting point of security, artificial intelligence, and how adults actually learn.</p>
+      <p>She holds an M.S. in Cybersecurity Engineering and a B.S. in Information Technology, and she is a doctoral student in Instructional Design and Technology. Sojourner Labs brings that classroom experience to small businesses that need training people will finish and remember. Every mission is built on the same principle she uses with her students: people learn security by doing it.</p>
+    </div>
+  </div>
+</div></section>
+
+<section id="faq"><div class="wrap">
+  <h2>Questions</h2>
+  <details><summary>How long does a mission take?</summary><p>Most learners finish in 15 to 25 minutes.</p></details>
+  <details><summary>Does this count for cyber insurance?</summary><p>Many carriers ask whether staff receive security awareness training. Each learner's certificate gives you a dated record. Confirm requirements with your carrier.</p></details>
+  <details><summary>Do employees need accounts?</summary><p>No. Missions run in any modern browser with no installs.</p></details>
+  <details><summary>Can you build a mission around our business?</summary><p>Yes. Custom scenarios are available. Ask when you request a license.</p></details>
+</div></section>
+
+<footer><div class="wrap">© 2026 Sojourner Labs. All rights reserved.</div></footer>
+
+<script>
+// network animation
+const c=document.getElementById('net'),x=c.getContext('2d');let P=[];
+function size(){c.width=c.offsetWidth;c.height=c.offsetHeight;P=Array.from({length:60},()=>({x:Math.random()*c.width,y:Math.random()*c.height,vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4}))}
+function draw(){x.clearRect(0,0,c.width,c.height);for(const p of P){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>c.width)p.vx*=-1;if(p.y<0||p.y>c.height)p.vy*=-1;x.fillStyle='#38e1c6';x.fillRect(p.x,p.y,2,2)}
+for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++){const d=Math.hypot(P[i].x-P[j].x,P[i].y-P[j].y);if(d<120){x.strokeStyle=`rgba(124,156,255,${1-d/120})`;x.beginPath();x.moveTo(P[i].x,P[i].y);x.lineTo(P[j].x,P[j].y);x.stroke()}}requestAnimationFrame(draw)}
+addEventListener('resize',size);size();draw();
+// risk check
+document.querySelectorAll('#checks input').forEach(i=>i.addEventListener('change',()=>{let s=0;document.querySelectorAll('#checks input:checked').forEach(k=>s+=+k.dataset.w);document.getElementById('bar').style.width=s+'%';document.getElementById('riskText').textContent='Your exposure: '+(s>=60?'High. Your team is a likely target, and training is the fastest fix.':s>=40?'Moderate. A few habits would close real gaps.':'Low');}));
+// pricing
+const r=document.getElementById('seats');
+function price(){const n=+r.value;let p,t;if(n<=15){p=249;t=1}else if(n<=50){p=599;t=2}else{p=n*12;t=3}
+document.getElementById('seatLabel').textContent=n+(n==1?' employee':' employees');document.getElementById('priceOut').firstChild.textContent='$'+p.toLocaleString();
+document.querySelectorAll('.tiers .card').forEach(k=>k.classList.toggle('on',+k.dataset.t===t))}
+r.addEventListener('input',price);price();
+</script>
+</body>
+</html>

@@ -1,13 +1,13 @@
-# Workforce Risk Shield: Training Proposal
+# The Brightline Breach: Training Proposal
 
-**Prepared by:** Vanguard Cyber Labs
+**Prepared by:** Sojourner Labs
 **Founder:** Norma DePriest, M.S. Cybersecurity Engineering
 **Prepared for:** [Client Company Name], Attn: [Contact Name, Title]
 **Date:** [Date]
 
 ## TL;DR
 
-Vanguard Cyber Labs will provide [Client Company Name] with interactive training in cybersecurity awareness, AI awareness, and compliance for up to [Number] employees. Each employee completes three locked, scenario based challenges in about 20 to 30 minutes through a standard web browser and receives a printable completion certificate for your training records. The flat annual license is [$Price], with no per seat fees and nothing to install.
+Sojourner Labs will provide [Client Company Name] with interactive training in cybersecurity awareness, AI awareness, and compliance for up to [Number] employees. Each employee completes three locked, scenario based challenges in about 20 to 30 minutes through a standard web browser and receives a printable completion certificate for your training records. The annual license is [$Price] ($249 for up to 15 employees, $599 for up to 50, or $12 per employee for 51 to 250), with nothing to install.
 
 ## The Problem
 
@@ -15,7 +15,7 @@ Small and midsize businesses face the same threats as large companies with a fra
 
 ## The Solution
 
-The Workforce Risk Shield is a short, interactive program built around three everyday tasks: reading email, using AI assistants, and sharing files. Each module teaches one practical habit and then asks the employee to apply it to a realistic scenario. An employee cannot move forward until they answer correctly, which means completion reflects understanding rather than clicks.
+The The Brightline Breach is a short, interactive program built around three everyday tasks: reading email, using AI assistants, and sharing files. Each module teaches one practical habit and then asks the employee to apply it to a realistic scenario. An employee cannot move forward until they answer correctly, which means completion reflects understanding rather than clicks.
 
 | Module | What Employees Learn | Interactive Challenge |
 |---|---|---|
@@ -25,7 +25,7 @@ The Workforce Risk Shield is a short, interactive program built around three eve
 
 ## Why It Supports Your Compliance Efforts
 
-Ohio's Data Protection Act (Ohio Revised Code Chapter 1354) gives businesses an affirmative defense in certain data breach lawsuits when they maintain a written cybersecurity program that reasonably conforms to a recognized framework, such as the NIST Cybersecurity Framework. Workforce awareness and training is a core element of those frameworks. The Workforce Risk Shield is designed to support the training portion of your program and to give you documentation that training took place. It does not by itself make a business compliant with any law, and we recommend confirming your specific obligations with your legal counsel or insurance carrier.
+Ohio's Data Protection Act (Ohio Revised Code Chapter 1354) gives businesses an affirmative defense in certain data breach lawsuits when they maintain a written cybersecurity program that reasonably conforms to a recognized framework, such as the NIST Cybersecurity Framework. Workforce awareness and training is a core element of those frameworks. The The Brightline Breach is designed to support the training portion of your program and to give you documentation that training took place. It does not by itself make a business compliant with any law, and we recommend confirming your specific obligations with your legal counsel or insurance carrier.
 
 ## What You Receive
 
@@ -58,5 +58,5 @@ Let me know your thoughts.
 
 Best,
 Norma DePriest
-Founder, Vanguard Cyber Labs
+Founder, Sojourner Labs
 [Contact Email]
