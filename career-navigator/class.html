@@ -1,0 +1,46 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Teacher Class Summary | Hocking College Career Navigator</title>
+<style>
+body{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;background:#f3f5f7;color:#1b2430}
+header{background:#14482b;color:#fff;padding:18px 24px;font-weight:800;letter-spacing:1px}header a{color:#fff;text-decoration:none}header span{color:#f2c14e}
+main{max-width:980px;margin:0 auto;padding:24px}.card{background:#fff;border-radius:16px;padding:22px 24px;margin:0 0 18px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+h1{margin:0 0 6px}h2{margin:0 0 12px}textarea{width:100%;min-height:150px;font:14px ui-monospace,monospace;border:2px solid #d5dae1;border-radius:10px;padding:10px;box-sizing:border-box}
+.btn{background:#f2c14e;border:0;border-radius:999px;padding:10px 20px;font-weight:800;font-size:16px;cursor:pointer}.btn.ghost{background:#fff;border:2px solid #d5dae1}
+.row{display:grid;grid-template-columns:230px 1fr 50px;gap:10px;align-items:center;margin:6px 0}.track{background:#eceff3;border-radius:6px;height:16px;overflow:hidden}.track i{display:block;height:100%}
+.big{font-size:42px;font-weight:900}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.stat{background:#f8fafc;border-radius:12px;padding:14px;text-align:center}
+code{background:#eef1f4;padding:2px 6px;border-radius:6px}.small{font-size:13px;color:#556}
+@media print{.noprint{display:none}body{background:#fff}.card{box-shadow:none;border:1px solid #ddd}}
+</style></head><body>
+<header><a href="./">HOCKING COLLEGE <span>CAREER NAVIGATOR</span></a> · Teacher Class Summary</header>
+<main>
+<div class="card noprint"><h1>See what your class discovered</h1>
+<p><b>1.</b> Make up a short class code, like <code>HAWKS3</code> or <code>NHS2PERIOD</code>, and write it on the board.</p>
+<p><b>2.</b> Students type it in the "Class code" box before they start. At the end, each student gets a result code that looks like <code>HAWKS3~ICR~cyber~tech</code>, with a Copy button.</p>
+<p><b>3.</b> Collect the codes any way you like: a Google Form, a shared doc, the chat, or students reading them aloud. Paste them all below, one per line or mixed in with other text.</p>
+<textarea id="in" placeholder="Paste student result codes here"></textarea>
+<p><input id="cls" placeholder="Only count this class code (optional)" style="padding:8px 12px;border:2px solid #d5dae1;border-radius:10px;font-size:15px"> <button class="btn" id="go">Build my class summary</button> <button class="btn ghost" onclick="print()">🖨️ Print</button></p>
+<p class="small">Nothing is uploaded or saved. Codes contain no names, only the interest code, top program, and top subject area.</p></div>
+<div id="out"></div>
+</main>
+<script src="data.js"></script><script src="programs-more.js"></script><script src="story.js"></script><script src="story-fields.js"></script>
+<script>
+const P=Object.fromEntries(PROGRAMS.map(p=>[p.id,p]));
+const bars=(obj,lab,color)=>{const e=Object.entries(obj).sort((a,b)=>b[1]-a[1]),m=Math.max(1,...e.map(x=>x[1]));return e.map(([k,v])=>`<div class="row"><span>${lab(k)}</span><div class="track"><i style="width:${v/m*100}%;background:${color(k)}"></i></div><b>${v}</b></div>`).join('')};
+document.getElementById('go').onclick=()=>{
+ const only=document.getElementById('cls').value.trim().toUpperCase();
+ const codes=[...document.getElementById('in').value.matchAll(/([A-Z0-9]+)~([RIASEC]{3})~([a-z-]+)~([a-z]+)/g)].filter(m=>!only||m[1]===only);
+ const out=document.getElementById('out');
+ if(!codes.length){out.innerHTML='<div class="card"><b>No result codes found.</b> They look like <code>HAWKS3~ICR~cyber~tech</code>.</div>';return}
+ const L={},C={},PR={},F={},CL=new Set();
+ codes.forEach(m=>{CL.add(m[1]);C[m[2]]=(C[m[2]]||0)+1;[...m[2]].forEach((k,i)=>L[k]=(L[k]||0)+(3-i));PR[m[3]]=(PR[m[3]]||0)+1;F[m[4]]=(F[m[4]]||0)+1});
+ const topP=Object.entries(PR).sort((a,b)=>b[1]-a[1])[0],topL=Object.entries(L).sort((a,b)=>b[1]-a[1])[0];
+ out.innerHTML=`<div class="card"><h2>Class ${[...CL].join(', ')}</h2><div class="grid">
+  <div class="stat"><div class="big">${codes.length}</div>students</div>
+  <div class="stat"><div class="big">${P[topP[0]]?.icon||''}</div>Most common match:<br><b>${P[topP[0]]?.name||topP[0]}</b></div>
+  <div class="stat"><div class="big" style="color:${RIASEC[topL[0]].color}">${topL[0]}</div>Strongest interest:<br><b>${RIASEC[topL[0]].name} (${RIASEC[topL[0]].nick})</b></div></div></div>
+ <div class="card"><h2>Interest types across the class</h2><p class="small">Weighted: a student's first letter counts 3, second 2, third 1.</p>${bars(L,k=>`<b style="color:${RIASEC[k].color}">${RIASEC[k].name}</b>`,k=>RIASEC[k].color)}</div>
+ <div class="card"><h2>Top program matches</h2>${bars(PR,k=>(P[k]?P[k].icon+' '+P[k].name:k),k=>P[k]?.color||'#888')}</div>
+ <div class="card"><h2>What students are drawn to</h2>${bars(F,k=>FIELDS[k]?FIELDS[k].icon+' '+FIELDS[k].name:k,()=>'#2f6b3a')}</div>
+ <div class="card"><h2>Most common interest codes</h2>${bars(C,k=>k,()=>'#5b3fa8')}</div>`;
+};
+</script></body></html>

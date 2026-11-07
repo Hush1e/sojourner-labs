@@ -100,7 +100,10 @@ header{display:flex;justify-content:space-between;align-items:center;gap:12px;fl
  #report tr{break-inside:avoid}}
 .badge{margin-top:10px;padding:8px 12px;border-radius:10px;background:#fff4cc;border:2px solid #f2c14e;animation:pop .5s}
 @keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
-.hero .cert{color:#1b2430!important;font-weight:700}
+.hero .story p{white-space:pre-line}
+.tbar{height:10px;border-radius:6px;background:rgba(255,255,255,.2);margin:14px 0 0;overflow:hidden}.tbar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#f2c14e,#ff6b4a);transition:width .1s linear}
+.mitem.sel{border-color:#f2c14e!important;background:rgba(242,193,78,.25)!important}.mitem.right{border-color:#4cd964!important;background:rgba(76,217,100,.3)!important;opacity:1!important}.mitem.wrong{opacity:.45}
+.cert{color:#1b2430!important;font-weight:700}
 .cert{display:inline-block;background:#f3f5f7;border:2px solid var(--c);border-radius:999px;padding:6px 14px;margin:4px 6px 4px 0;font-weight:600;font-size:14px}
 .news{border-left:4px solid var(--c);background:#f3f5f7;border-radius:0 12px 12px 0;padding:12px 14px;margin-bottom:10px}
 .news a,.links a,.match a:not(.btn){color:var(--c);font-weight:700}
@@ -128,6 +131,7 @@ input[type=range]{width:100%;accent-color:#2f6b3a}
 <script src="programs-more.js"></script>
 <script src="story.js"></script>
 <script src="story-fields.js"></script>
+<script src="story-polish.js"></script>
 <script src="athletics.js"></script>
 <script src="cert-links.js"></script>
 <script src="videos.js"></script>
@@ -176,25 +180,27 @@ function rank(){
   return{p,s,pct:Math.max(1,Math.min(99,Math.round(s*100)))}}).sort((a,b)=>b.s-a.s);
 }
 function welcome(){
- score=Object.fromEntries(K.map(k=>[k,0]));fscore={};boost={};badges=[];steps=0;hud();scenery('sunrise');
+ score=Object.fromEntries(K.map(k=>[k,0]));fscore={};boost={};badges=[];steps=0;if(window.miniScene){wins=0;played=0}hud();scenery('sunrise');
  app.innerHTML=`<div class="hero"><div class="art">${art('🌅🥾🍳🩺💻🛡️')}</div>
   <h1>The Longest Saturday</h1>
-  <p style="font-size:20px;max-width:640px;margin:0 auto 18px">A choose your own adventure career quiz. One wild day in Hocking County. About 10 big decisions. Every choice you make reveals what kind of work fits you, and at the end you'll get your career interest code and your best matching Hocking College programs.</p>
-  <input class="field" id="nm" placeholder="Your first name" maxlength="20"><br>
+  <p style="font-size:20px;max-width:640px;margin:0 auto 18px">A choose your own adventure career quiz. One wild day in Hocking County. About 12 big decisions and 1 surprise challenge. Every choice you make reveals what kind of work fits you, and at the end you'll get your career interest code and your best matching Hocking College programs.</p>
+  <input class="field" id="nm" placeholder="Your first name" maxlength="20"><br><input class="field" id="kc" placeholder="Class code (optional, from your teacher)" maxlength="12" style="font-size:15px"><br>
   <button class="btn" id="go">Start the adventure</button> <button class="btn ghost" id="all">Just show me the programs</button> <button class="btn ghost" id="ath">Athletics and Esports</button>
   <p class="small" style="margin-top:22px">Based on the Holland career interest model (RIASEC) used by the U.S. Department of Labor. Want the official version too? Try the free <a style="color:#f2c14e" href="https://www.mynextmove.org/explore/ip" target="_blank" rel="noopener">O*NET Interest Profiler</a>.</p></div>`;
- $('#go').onclick=()=>{name=($('#nm').value.trim().split(' ')[0]||'');scene('start')};$('#all').onclick=()=>results(true);$('#ath').onclick=()=>{results(true);setTimeout(()=>document.querySelector('.card[style*="f2c14e"]').scrollIntoView({behavior:'smooth'}),100)};
+ $('#go').onclick=()=>{name=($('#nm').value.trim().split(' ')[0]||'');klass=($('#kc').value||'').trim().toUpperCase().replace(/[^A-Z0-9]/g,'');scene('start')};$('#all').onclick=()=>results(true);$('#ath').onclick=()=>{results(true);setTimeout(()=>document.querySelector('.card[style*="f2c14e"]').scrollIntoView({behavior:'smooth'}),100)};
 }
 
 function type(el,paras,cb){
  el.innerHTML=paras.map(()=>'<p></p>').join('');const ps=el.querySelectorAll('p');let i=0,k=0;
- const t=setInterval(()=>{if(i>=paras.length){clearInterval(t);return cb()}ps[i].textContent=paras[i].slice(0,k+=3);if(k>=paras[i].length){i++;k=0}},16);
+ const t=setInterval(()=>{if(!el.isConnected){clearInterval(t);return}if(i>=paras.length){clearInterval(t);return cb()}ps[i].textContent=paras[i].slice(0,k+=3);if(k>=paras[i].length){i++;k=0}},16);
  el.onclick=()=>{clearInterval(t);paras.forEach((p,j)=>ps[j].textContent=p);el.onclick=null;cb();cb=()=>{}};
 }
 
 function scene(id){
  const S=SCENES[id];
+ if(S.mini)return miniScene(id);
  if(S.type==='mentor')return mentor(S);
+ if(window.SCENE_SFX&&SCENE_SFX[id])setTimeout(()=>SFX.play(SCENE_SFX[id]),200);
  scenery(S.bg);window.scrollTo({top:0,behavior:'smooth'});
  app.innerHTML=`${S.ch?`<div class="chap">${S.ch}</div>`:''}<div class="art">${art(S.art)}</div><div class="story" id="st" title="Tap to skip"></div><div class="choices" id="ch"></div><div id="oc"></div>`;
  type($('#st'),S.text.map(fill),()=>choices(S));
@@ -211,7 +217,7 @@ function choices(S,after){
   if(!c.out)return go();
   const pts=Object.entries(c.p).map(([k,v])=>`+${v} ${RIASEC[k].name}`).concat(Object.keys(c.f||{}).map(k=>FIELDS[k].icon+' '+FIELDS[k].name)).join(' · ')+(nb?`<div class="badge">🏅 Badge unlocked: <b>${nb}</b></div>`:'');
   $('#oc').innerHTML=`<div class="outcome">${fill(c.out)}<div class="pts">${pts}</div><p style="margin:14px 0 0"><button class="btn" id="nx">Continue ➜</button></p></div>`;
-  $('#oc').scrollIntoView({behavior:'smooth',block:'nearest'});$('#nx').onclick=go;
+  if(nb)setTimeout(()=>SFX.play('badge'),300);$('#oc').scrollIntoView({behavior:'smooth',block:'nearest'});$('#nx').onclick=go;
  });
 }
 
@@ -305,7 +311,7 @@ function report(R,code){
  const d=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}),top=R.slice(0,5),mx=Math.max(1,...K.map(k=>score[k]));
  let el=document.getElementById('report');if(!el){el=document.createElement('div');el.id='report';document.body.appendChild(el)}
  el.innerHTML=`<div class="rp-head"><div><div class="rp-k">HOCKING COLLEGE CAREER NAVIGATOR</div><h1>Certificate of Completion</h1></div><div style="font-size:44px">🧭</div></div>
- <p class="rp-big">This certifies that <b>${name||'_______________________'}</b> completed <i>The Longest Saturday</i> career interest adventure on ${d}.</p>
+ <p class="rp-big">This certifies that <b>${name||'_______________________'}</b> completed <i>The Longest Saturday</i> career interest adventure on ${d}${klass?` (class ${klass})`:''}. Challenges won: ${wins} of ${played}.</p>
  <h2>Career Interest Code: ${code.join('')}</h2>
  ${code.map(k=>`<p><b>${RIASEC[k].name} (${k}):</b> ${RIASEC[k].desc}</p>`).join('')}
  <table><tr><th>Interest area</th><th>Points</th><th style="width:45%"></th></tr>${K.slice().sort((a,b)=>score[b]-score[a]).map(k=>`<tr><td>${RIASEC[k].name}</td><td>${score[k]}</td><td><div class="rp-bar" style="width:${score[k]/mx*100}%;background:${RIASEC[k].color}"></div></td></tr>`).join('')}</table>
@@ -333,7 +339,7 @@ function results(browse){
   <p>${code.map(k=>`<b>${RIASEC[k].nick}</b>`).join(' · ')}</p><p style="margin-top:14px"><b>What you're drawn to:</b><br>${topF().map(f=>`<span class="cert">${FIELDS[f].icon} ${FIELDS[f].name}</span>`).join('')}</p>${badges.length?`<p><b>Badges earned:</b><br>${badges.map(b=>`<span class="cert" style="border-color:#f2c14e;background:#fff4cc">${BADGES[b]}</span>`).join('')}</p>`:''}</div>
   <div class="card"><div class="rbars">${K.slice().sort((a,b)=>score[b]-score[a]).map(k=>`<div class="row"><a href="${RIASEC[k].url}" target="_blank" rel="noopener" style="color:${RIASEC[k].color}">${RIASEC[k].name}</a><div class="track"><div class="fill" style="background:${RIASEC[k].color}" data-w="${score[k]/mx*100}"></div></div><b>${score[k]}</b></div>`).join('')}</div>
   ${code.map(k=>`<p><b style="color:${RIASEC[k].color}">${RIASEC[k].name}:</b> ${RIASEC[k].desc}</p>`).join('')}
-  <p class="small" style="color:#556">This is a fun interest activity, not a test score. For the official version, take the <a href="https://www.mynextmove.org/explore/ip" target="_blank" rel="noopener">O*NET Interest Profiler</a> and talk with your school counselor.</p></div>
+  <p class="small" style="color:#556">This is a fun interest activity, not a test score. Teachers: see your whole class at once on the <a href="class.html" target="_blank" rel="noopener">class summary page</a>. For the official version, take the <a href="https://www.mynextmove.org/explore/ip" target="_blank" rel="noopener">O*NET Interest Profiler</a> and talk with your school counselor.</p></div>
   <h2 style="margin-top:34px;text-align:center">Your best match at Hocking College</h2>`;
  app.insertAdjacentHTML('beforeend',`<div id="detail"></div><h3 style="margin-top:30px">${browse?'All programs':'Your next best matches'}</h3>
   ${browse?`<p><select class="field" id="sch" style="width:auto"><option value="">All schools (${R.length} programs)</option>${[...new Set(PROGRAMS.map(p=>p.school))].map(s=>`<option>${s}</option>`).join('')}</select></p>`:''}
@@ -344,10 +350,11 @@ function results(browse){
  else{minis(R.slice(1,7));$('#more').onclick=e=>{minis(R.slice(1));e.target.remove()}}
  $('#again').onclick=welcome;
  if(!browse)$('#print').onclick=()=>report(R,code);
- if(!browse)show(top.id);
+ if(!browse){show(top.id);const sb=shareBlock(R,code);[...app.querySelectorAll('h2')].find(x=>/best match/.test(x.textContent)).insertAdjacentHTML('beforebegin',sb.html);sb.wire();setTimeout(()=>SFX.play('fanfare'),300)}
  setTimeout(()=>app.querySelectorAll('.rbars .fill').forEach(f=>f.style.width=f.dataset.w+'%'),200);
 }
 welcome();
 </script>
+<script src="extras.js"></script>
 </body>
 </html>
