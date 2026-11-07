@@ -1,9 +1,10 @@
 /* Official career videos from CareerOneStop (U.S. Department of Labor), public domain.
-   Key = program id, value = [O*NET code without punctuation, career shown in the video].
+   Key = program id, value = [O*NET code without punctuation, career shown in the video],
+   or a list of those pairs to show several videos for one program.
    To add one, find the career at careeronestop.org/Videos and copy its videocode. */
 window.VIDEOS = {
   wildlife:["33303100","Fish and Game Wardens"], nursing:["29114100","Registered Nurses"], police:["33305100","Police and Sheriff's Patrol Officers"],
-  culinary:["35101100","Chefs and Head Cooks"], cyber:["15121200","Information Security Analysts"], "dental-hygiene":["29129200","Dental Hygienists"],
+  culinary:["35101100","Chefs and Head Cooks"], cyber:[["15121200","Information Security Analysts"],["15124400","Network and Computer Systems Administrators"],["15123100","Computer Network Support Specialists"],["15124100","Computer Network Architects"],["15123200","Computer User Support Specialists (Help Desk)"],["15121100","Computer Systems Analysts"]], "dental-hygiene":["29129200","Dental Hygienists"],
   efda:["31909100","Dental Assistants"], "health-informatics":["29207200","Medical Records Specialists"], "medical-assistant":["31909200","Medical Assistants"],
   "social-work":["21109300","Social and Human Service Assistants"], canine:["39201100","Animal Trainers"], "emt-paramedic":["29204300","Paramedics"],
   "environmental-science":["19404200","Environmental Science Technicians"], "fire-ems":["33201100","Firefighters"], fish:["19407100","Forest and Conservation Technicians"],
