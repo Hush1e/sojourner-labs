@@ -280,6 +280,7 @@ function report(R,code){
  <p>☐ Visit the program page: ${R[0].p.url}<br>☐ Talk with my school counselor about these results<br>☐ Take the official O*NET Interest Profiler at mynextmove.org<br>☐ Schedule a visit to Hocking College in Nelsonville, Ohio</p>
  <p class="small" style="margin-top:20px">This is an interest activity, not a test score. Results reflect the choices made during the story.</p>
  <div class="rp-sign"><div>Student signature</div><div>Counselor or teacher</div></div>`;
+ el.style.cssText='display:block;position:absolute;left:-9999px;top:0;width:720px;zoom:1';const hh=el.scrollHeight;el.style.cssText='';el.style.zoom=Math.min(1,940/hh);
  document.body.classList.add('printing');window.print();setTimeout(()=>document.body.classList.remove('printing'),500);
 }
 function results(browse){
