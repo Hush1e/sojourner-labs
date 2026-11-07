@@ -81,6 +81,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:12px;fl
  #report tr{break-inside:avoid}}
 .badge{margin-top:10px;padding:8px 12px;border-radius:10px;background:#fff4cc;border:2px solid #f2c14e;animation:pop .5s}
 @keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+.hero .cert{color:#1b2430!important;font-weight:700}
 .cert{display:inline-block;background:#f3f5f7;border:2px solid var(--c);border-radius:999px;padding:6px 14px;margin:4px 6px 4px 0;font-weight:600;font-size:14px}
 .news{border-left:4px solid var(--c);background:#f3f5f7;border-radius:0 12px 12px 0;padding:12px 14px;margin-bottom:10px}
 .news a,.links a,.match a:not(.btn){color:var(--c);font-weight:700}
@@ -183,7 +184,7 @@ function choices(S,after){
  ch.innerHTML=S.choices.map((c,k)=>`<button class="choice" style="animation-delay:${k*.1}s" data-k="${k}"><span class="i">${c.icon}</span>${fill(c.label)}</button>`).join('');
  ch.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
   const c=S.choices[b.dataset.k];
-  Object.entries(c.p).forEach(([k,v])=>score[k]+=v);let nb='';Object.entries(c.f||{}).forEach(([k,v])=>{fscore[k]=(fscore[k]||0)+v;if(fscore[k]>=5&&!badges.includes(k)){badges.push(k);nb=BADGES[k]}});steps++;hud();
+  Object.entries(c.p).forEach(([k,v])=>score[k]+=v);let nb='';Object.entries(c.f||{}).forEach(([k,v])=>{fscore[k]=(fscore[k]||0)+v;if(fscore[k]>=4&&!badges.includes(k)){badges.push(k);nb=BADGES[k]}});steps++;hud();
   ch.querySelectorAll('.choice').forEach(x=>{x.disabled=true;x.style.opacity=x===b?1:.3});
   const go=()=>c.next==='end'?results():scene(c.next);
   if(after)return after(c);
@@ -283,10 +284,11 @@ function report(R,code){
 }
 function results(browse){
  scenery('results');window.scrollTo({top:0});
+ if(!browse&&!badges.length){const t=topF()[0];if(t)badges.push(t)}
  const R=rank(),top=R[0].p,code=K.slice().sort((a,b)=>score[b]-score[a]).slice(0,3),mx=Math.max(1,...K.map(k=>score[k]));
  const show=(id,scroll)=>{const r=R.find(x=>x.p.id===id),d=$('#detail');d.innerHTML=card(r.p,browse?null:r.pct);wire(d);if(scroll)d.scrollIntoView({behavior:'smooth'})};
  app.innerHTML=browse?`<div class="hero" style="padding-top:20px"><h1>Explore Hocking programs</h1><p>All ${PROGRAMS.length} Hocking College programs. Tap one to see careers, pay, demand, and more.</p></div>`:
- `<div class="hero" style="padding-top:10px"><div class="chap">Epilogue · Ten Years Later</div>
+ `<div class="hero" style="padding-top:10px"><p style="margin:0 0 16px"><button class="btn" id="print">🖨️ Print my completion report</button></p><div class="chap">Epilogue · Ten Years Later</div>
   <div class="card" style="text-align:left;border-left:8px solid ${top.color}"><p style="font-size:19px;margin:0">${fill(name?name+', i':'I')}${top.future.slice(1)}</p></div>
   <h1 style="margin-top:30px">Your Career Interest Code</h1>
   <div class="code">${code.map((k,i)=>`<div style="background:${RIASEC[k].color};animation-delay:${i*.2}s">${k}</div>`).join('')}</div>
@@ -298,7 +300,7 @@ function results(browse){
  app.insertAdjacentHTML('beforeend',`<div id="detail"></div><h3 style="margin-top:30px">${browse?'All programs':'Your next best matches'}</h3>
   ${browse?`<p><select class="field" id="sch" style="width:auto"><option value="">All schools (${R.length} programs)</option>${[...new Set(PROGRAMS.map(p=>p.school))].map(s=>`<option>${s}</option>`).join('')}</select></p>`:''}
   <div class="minis" id="minis"></div>${browse?'':`<p style="text-align:center"><button class="btn ghost" id="more">See all ${R.length} programs ranked for you</button></p>`}
-  ${athletics()}<p style="margin-top:30px;text-align:center">${browse?'':'<button class="btn" id="print" style="margin-right:10px">🖨️ Print my completion report</button>'}<button class="btn" id="again">Play again with different choices</button></p>`);
+  ${athletics()}<p style="margin-top:30px;text-align:center"><button class="btn" id="again">Play again with different choices</button></p>`);
  const minis=(list)=>{$('#minis').innerHTML=list.map(r=>`<button class="mini" data-id="${r.p.id}"><div class="ic">${r.p.icon}</div><b>${r.p.name}</b>${browse?`<div class="small">${r.p.school}</div>`:`<div class="bar"><i style="width:${r.pct}%"></i></div><span class="small">${r.pct}% match</span>`}</button>`).join('');app.querySelectorAll('.mini').forEach(b=>b.onclick=()=>show(b.dataset.id,true))};
  if(browse){const R2=R.slice().sort((a,b)=>a.p.name.localeCompare(b.p.name));minis(R2);$('#sch').onchange=e=>minis(R2.filter(r=>!e.target.value||r.p.school===e.target.value))}
  else{minis(R.slice(1,7));$('#more').onclick=e=>{minis(R.slice(1));e.target.remove()}}
