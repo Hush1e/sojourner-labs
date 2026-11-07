@@ -3,9 +3,11 @@
 window.ATHLETICS = {
   intro: "Play while you earn your degree. The Hocking College Hawks compete in the NJCAA and the Ohio Community College Athletic Conference (OCCAC), and student athletes can major in any program.",
   url: "https://athletics.hocking.edu",
-  men: ["Baseball", "Basketball", "Bowling", "Cross Country", "Football", "Golf", "Soccer", "Track and Field"],
-  women: ["Basketball", "Bowling", "Cross Country", "Softball", "Track and Field", "Volleyball"],
-  coed: ["Archery", "Esports"],
+  /* Team links: each bubble opens that team's page on athletics.hocking.edu.
+     Verified codes: bsb, mbkb, sball, wvball, archery, esports. Others use the site's standard naming; click to confirm. */
+  men: [["Baseball","https://athletics.hocking.edu/sports/bsb/index"],["Basketball","https://athletics.hocking.edu/sports/mbkb/index"],["Bowling","https://athletics.hocking.edu/sports/mbowl/index"],["Cross Country","https://athletics.hocking.edu/sports/mxc/index"],["Football","https://athletics.hocking.edu/sports/fball/index"],["Golf","https://athletics.hocking.edu/sports/mgolf/index"],["Soccer","https://athletics.hocking.edu/sports/msoc/index"],["Track and Field","https://athletics.hocking.edu/sports/mtrack/index"]],
+  women: [["Basketball","https://athletics.hocking.edu/sports/wbkb/index"],["Bowling","https://athletics.hocking.edu/sports/wbowl/index"],["Cross Country","https://athletics.hocking.edu/sports/wxc/index"],["Softball","https://athletics.hocking.edu/sports/sball/index"],["Track and Field","https://athletics.hocking.edu/sports/wtrack/index"],["Volleyball","https://athletics.hocking.edu/sports/wvball/index"]],
+  coed: [["Archery","https://athletics.hocking.edu/sports/archery/index"],["Esports","https://athletics.hocking.edu/sports/esports/index"]],
   highlights: [
     { title: "Men's basketball won the OCCAC Championship for the first time in Hocking history, as co champions.", url: "https://blog.hocking.edu/topic/sports" },
     { title: "Hocking Baseball landed four All Conference selections in 2025.", url: "https://hocking.prestosports.com/sports/bsb/headlines-featured" },

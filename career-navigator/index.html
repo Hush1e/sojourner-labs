@@ -228,7 +228,7 @@ function wire(el){
  el.querySelectorAll('.tl .step').forEach(s=>s.onclick=()=>{const n=s.nextElementSibling;if(n)n.classList.add('seen')});
 }
 
-function athletics(){const A=ATHLETICS,li=a=>a.map(x=>`<span class="cert">${x}</span>`).join('');
+function athletics(){const A=ATHLETICS,li=a=>a.map(([n,u])=>`<a class="cert" style="text-decoration:none;color:#1b2430;border-color:#f2c14e" href="${u}" target="_blank" rel="noopener">${n} ↗</a>`).join('');
  return`<div class="card" style="border-top:10px solid #f2c14e;margin-top:34px"><div style="font-size:54px">🏅🎮</div><h2 style="margin:6px 0">Hocking Hawks Athletics and Esports</h2><p>${A.intro}</p>
  <div class="cols"><div><h3>Men's teams</h3>${li(A.men)}<h3>Women's teams</h3>${li(A.women)}<h3>Coed</h3>${li(A.coed)}</div>
  <div><h3>🎮 Hawks Esports</h3><p>${A.esports.about}</p><p><b>Games:</b> ${A.esports.games.join(', ')}</p></div></div>
