@@ -24,6 +24,7 @@ const near = q => `https://www.indeed.com/jobs?q=${encodeURIComponent(q)}&l=Nels
 
 window.PROGRAMS = [
  { id: "wildlife", school: "Natural Resources and Public Safety", riasec: { R: 3, I: 2, S: 1 },
+   highlights: [{ date: "Ongoing", title: "For more than 25 years, Hocking natural resources students have attended a month long field school at Haliburton Forest in Ontario, Canada.", src: "Hocking College Blog", url: "https://blog.hocking.edu/topic/wildlife-resources-management/page/2" }, { date: "Ongoing", title: "Hocking's School of Natural Resources is known for graduating more conservation professionals than any other two year school in the country.", src: "EnvironmentalCareer.com", url: "https://environmentalcareer.com/company/3005/hocking-college/" }],
    mentor: { name: "Ranger Dana Holt", role: "a wildlife technician with the state", hi: "Dana has mud up to her knees and a radio on her belt. \"Saw you out there today. You've got good instincts for the field.\"", start: "\"I did two years at Hocking in Wildlife Resources Management. We were in the woods almost every day. My first job was a seasonal tech position, and it turned full time.\"" },
    future: "In ten years you are a wildlife officer in Southeast Ohio. You start most mornings at sunrise, you know every creek in your county, and kids at school programs ask to see your trail camera photos.",
    img: "", /* optional: paste a Hocking photo URL for this program */ name: "Wildlife Resources Management", icon: "🦌", color: "#3f8f4f",
@@ -52,6 +53,7 @@ window.PROGRAMS = [
      { date: "2025", title: "Ohio expanded its reintroduction of endangered lake sturgeon into the Cuyahoga, Sandusky, and Scioto rivers.", src: "Richland Source / ODNR", url: "https://www.richlandsource.com/tag/division-of-wildlife/page/2/" } ] },
 
  { id: "nursing", school: "Allied Health and Nursing", riasec: { S: 3, I: 2, C: 1 },
+   highlights: [{ date: "May 2023", title: "Hocking's nursing program celebrated outstanding NCLEX licensing exam results during Nurses Week.", src: "Hocking College News", url: "https://hcpress.hocking.edu/editions/hocking-colleges-nursing-program" }],
    mentor: { name: "Nurse Marcus Reed", role: "an emergency room nurse", hi: "Marcus is restocking a first aid kit. \"I watched you today. You stayed calm when people were scared. That's half of nursing.\"", start: "\"I started with Hocking's nursing program, passed my NCLEX, and got hired at the hospital where I did clinicals. Now I'm working on my bachelor's online.\"" },
    future: "In ten years you are a registered nurse. Patients remember your name, new nurses ask you for advice, and you are thinking about becoming a nurse practitioner.",
    img: "", /* optional: paste a Hocking photo URL for this program */ name: "Registered Nursing and LPN to RN", icon: "🩺", color: "#2f78c4",
@@ -80,6 +82,7 @@ window.PROGRAMS = [
      { date: "Sep 2026", title: "Kent State's nursing program reached its highest enrollment in a decade amid the national nursing shortage.", src: "News 5 Cleveland", url: "https://www.news5cleveland.com/news/local-news/oh-portage/amid-nationwide-nursing-staffing-shortage-kent-state-nursing-program-hits-highest-enrollment-in-a-decade" } ] },
 
  { id: "police", school: "Natural Resources and Public Safety", riasec: { E: 3, R: 1, S: 2 },
+   highlights: [{ date: "2022", title: "Hocking College became the Southeast Ohio regional training site for Ohio Peace Officer Training Academy advanced training.", src: "Hocking College Blog", url: "https://blog.hocking.edu/hocking-college-becomes-ohio-peace-officer-regional-training-opota-site-for-southeast-ohio" }],
    mentor: { name: "Deputy Alyssa Ortiz", role: "a sheriff's deputy", hi: "The deputy from earlier sits down with two cups of hot chocolate. \"You were good out there today. Ever think about law enforcement?\"", start: "\"I did criminal justice at Hocking and took the Ohio Peace Officer academy my last semester. I graduated with my degree and my certification at the same time.\"" },
    future: "In ten years you are a deputy and a community leader. You coach youth basketball, train new officers, and people in town wave when your cruiser goes by.",
    img: "", /* optional: paste a Hocking photo URL for this program */ name: "Criminal Justice and Ohio Peace Officer Training", icon: "🛡️", color: "#334a7d",
@@ -108,6 +111,7 @@ window.PROGRAMS = [
      { date: "Mar 2026", title: "The Ohio State Highway Patrol launched a text based recruiter tool for people interested in becoming troopers.", src: "WKTN", url: "https://wktn.com/?p=124097" } ] },
 
  { id: "culinary", school: "Workforce Development", riasec: { A: 3, E: 2.5, R: 2 },
+   highlights: [{ date: "2021", title: "Hocking's Culinary Arts program was rated one of the Top 10 Best Culinary Schools in Ohio by Best Choice Schools.", src: "Hocking College", url: "https://www.hocking.edu/culinary-arts-degree" }, { date: "Ongoing", title: "Culinary students travel abroad with chef instructors, including trips to Northern Italy.", src: "Hocking College Blog", url: "https://blog.hocking.edu/adventures-abroad-hocking-college-culinary-students-depart-for-italy" }],
    mentor: { name: "Chef Tony Vega", role: "a chef who owns a restaurant in Athens", hi: "Chef Tony tries the shelter dinner and finds you. \"Who made this? Seriously, this is good.\"", start: "\"Hocking's culinary program. I cooked for real guests at Rhapsody, earned my ServSafe, and worked my way up from line cook to chef to owner.\"" },
    future: "In ten years you run your own kitchen. Your menu changes with the seasons, local farmers know you by name, and there is a line out the door on Friday nights.",
    img: "", /* optional: paste a Hocking photo URL for this program */ name: "Culinary Arts", icon: "🍳", color: "#c4602f",
@@ -137,6 +141,7 @@ window.PROGRAMS = [
      { date: "May 2026", title: "The restaurant industry is investing in manager development and new credentials to grow its leadership pipeline.", src: "National Restaurant Association", url: "https://restaurant.org/research-and-media/media/press-releases/national-restaurant-association-celebrates-250-years-shaping-americas-workforce-leaders/" } ] },
 
  { id: "cyber", school: "Workforce Development", riasec: { I: 3, C: 2, R: 1 },
+   highlights: [{ date: "Nov 2025", title: "The Hocking College Cyber Hawks finished in the top 10 percent of 4,215 teams nationwide in the Fall 2025 National Cyber League competition.", src: "Hocking College News", url: "https://hcpress.hocking.edu/editions/hocking-college-cyber-hawks-finish-in-top-10-of-teams-in-national-cyber-league-competition" }, { date: "Spring 2026", title: "The Cyber Hawks improved to the top 7 percent of teams nationwide in the Spring 2026 National Cyber League competition.", src: "Hocking Cybersecurity program", url: "https://www.hocking.edu/cyber-security-and-network-systems" }],
    mentor: { name: "Priya Shah", role: "a cybersecurity analyst for a hospital system", hi: "Priya is fixing the shelter Wi Fi on her laptop. \"Mr. Patel told me what you did for him. You stopped a real scam today.\"", start: "\"I did the Cybersecurity and Network Systems program at Hocking and earned my CompTIA certifications. My first job was help desk. Two years later I was on the security team.\"" },
    future: "In ten years you are a cybersecurity analyst. You protect thousands of people's data, you hunt hackers for a living, and you can work from almost anywhere.",
    img: "", /* optional: paste a Hocking photo URL for this program */ name: "Cybersecurity and Network Systems", icon: "💻", color: "#5b3fa8",

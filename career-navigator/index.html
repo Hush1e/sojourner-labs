@@ -200,7 +200,7 @@ function card(p,pct){
  const q=encodeURIComponent(p.careers[0].title.split(' (')[0].split(' or ')[0]);
  return`<div class="card match" style="--c:${p.color}"><div class="ic">${p.icon}</div>${pct!=null?`<span class="pct">${pct}% match</span>`:''}<h2>${p.name}</h2>
  ${p.img?`<img class="photo" src="${p.img}" alt="${p.name} students at Hocking College">`:''}<p>${p.pitch}</p>
- <div class="tabs">${['Overview','A Day in the Life','Careers and Pay','Certifications','Demand and Jobs','Industry News','Learn More'].map((t,i)=>`<button class="tab${i?'':' on'}" data-i="${i}">${t}</button>`).join('')}</div>
+ <div class="tabs">${['Overview','A Day in the Life','Careers and Pay','Certifications','Demand and Jobs','News and Highlights','Learn More'].map((t,i)=>`<button class="tab${i?'':' on'}" data-i="${i}">${t}</button>`).join('')}</div>
  <div class="pane on"><p>${p.about}</p><p><b>Program:</b> ${p.length}</p><p><b>Interest code:</b> ${Object.keys(p.riasec).map(k=>RIASEC[k].name).join(', ')}</p><h3>What you'll do</h3><ul>${p.doing.map(d=>`<li>${d}</li>`).join('')}</ul></div>
  <div class="pane"><p class="small">Tap each moment to live the day.</p><div class="tl">${p.day.map((d,i)=>`<div class="step${i?'':' seen'}"><b>${d.t}</b><br>${d.txt}</div>`).join('')}</div></div>
  <div class="pane"><p class="small">National median yearly pay, May 2025, and projected job change 2025 to 2035 (U.S. Bureau of Labor Statistics).</p>
@@ -211,7 +211,7 @@ function card(p,pct){
   <h3>Southeast Ohio</h3><p>${p.region.url?`<a href="${p.region.url}" target="_blank" rel="noopener">${p.region.stat}</a>`:`${p.region.stat} <span class="small">(${p.region.year})</span>`}</p>
   <p><a class="btn" style="background:${p.color};color:#fff" href="${p.jobs}" target="_blank" rel="noopener">See current job openings near Hocking</a></p>
   <p class="small">Opens a live job search within 50 miles of Nelsonville. Also try <a href="https://topjobs.ohio.gov" target="_blank" rel="noopener">Ohio's Top Jobs</a> and <a href="https://ohiomeansjobs.ohio.gov" target="_blank" rel="noopener">OhioMeansJobs</a>.</p></div>
- <div class="pane">${p.news.length?'':'<p>No news collected yet for this field. Check the program page and BLS links under Learn More.</p>'}${p.news.map(n=>`<div class="news"><span class="small">${n.date} · ${n.src}</span><br>${n.title} <a href="${n.url}" target="_blank" rel="noopener">Read more</a></div>`).join('')}</div>
+ <div class="pane">${(p.highlights||[]).length?`<h3>🏆 Hocking program highlights</h3>${p.highlights.map(n=>`<div class="news" style="border-color:#d4a017"><span class="small">${n.date} · ${n.src}</span><br>${n.title} <a href="${n.url}" target="_blank" rel="noopener">Read more</a></div>`).join('')}`:''}<h3>📰 Industry news</h3>${p.news.length?'':'<p>No news collected yet for this field. Check the links under Learn More.</p>'}${p.news.map(n=>`<div class="news"><span class="small">${n.date} · ${n.src}</span><br>${n.title} <a href="${n.url}" target="_blank" rel="noopener">Read more</a></div>`).join('')}</div>
  <div class="pane"><ul class="links">
   <li><a href="${p.url}" target="_blank" rel="noopener">${p.name} at Hocking College</a>: courses, costs, and how to apply</li>
   <li><a href="https://www.bls.gov/ooh/a-z-index.htm" target="_blank" rel="noopener">Occupational Outlook Handbook</a>: what the job is really like, from the U.S. Bureau of Labor Statistics</li><li><a href="${p.careers[0].src}" target="_blank" rel="noopener">BLS Employment Projections</a>: pay and growth for every occupation</li>
