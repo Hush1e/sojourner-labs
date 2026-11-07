@@ -87,6 +87,7 @@ input[type=range]{width:100%;accent-color:#2f6b3a}
   <main id="app" aria-live="polite"></main>
 </div>
 <script src="data.js"></script>
+<script src="programs-more.js"></script>
 <script src="story.js"></script>
 <script>
 const app=document.getElementById('app'),K=Object.keys(RIASEC);
@@ -124,8 +125,9 @@ function hud(){const m=Math.max(4,...K.map(k=>score[k]));document.getElementById
 
 /* ---------- matching (cosine similarity) ---------- */
 function rank(){
- const u=K.map(k=>score[k]),nu=Math.hypot(...u)||1;
- return PROGRAMS.map(p=>{const v=K.map(k=>p.riasec[k]||0),nv=Math.hypot(...v);const d=u.reduce((s,x,i)=>s+x*v[i],0);return{p,pct:Math.round(d/(nu*nv)*100)}}).sort((a,b)=>b.pct-a.pct);
+ const u=K.map(k=>score[k]),nu=Math.hypot(...u)||1,ord=K.map((k,i)=>i).sort((a,b)=>u[b]-u[a]),w=[0,0,0,0,0,0];w[ord[0]]=3;w[ord[1]]=2;w[ord[2]]=1;
+ return PROGRAMS.map(p=>{const v=K.map(k=>p.riasec[k]||0),nv=Math.hypot(...v),cos=u.reduce((s,x,i)=>s+x*v[i],0)/(nu*nv),h=w.reduce((s,x,i)=>s+x*v[i],0)/nv;
+  return{p,pct:Math.round(cos*100),s:(h+0.5*cos)*(p.flex?0.5:1)}}).sort((a,b)=>b.s-a.s);
 }
 
 function welcome(){
@@ -171,7 +173,7 @@ function choices(S,after){
 /* ---------- mentor encounter ---------- */
 function mentor(S){
  scenery(S.bg);window.scrollTo({top:0,behavior:'smooth'});
- const p=rank()[0].p,m=p.mentor,c0=p.careers[0];
+ const p=rank()[0].p,m=p.mentor,c0=p.careers.find(c=>c.pay)||p.careers[0];
  app.innerHTML=`<div class="chap">${S.ch}</div><div class="art">${art('🏫🕯️'+p.icon)}</div>
   <div class="story"><p>As you finish up, someone walks over to you. It's ${m.name}, ${m.role}.</p><p>${fill(m.hi)}</p><p>They have a few minutes to talk. What do you ask?</p></div>
   <div class="choices" id="ch"></div><div id="oc"></div>`;
@@ -179,39 +181,40 @@ function mentor(S){
   let body='';
   if(c.show==='day')body=`<p>"Here's a real day for me."</p><div class="tl" style="--c:${p.color}">${p.day.map(d=>`<div class="step seen"><b>${d.t}</b><br>${d.txt}</div>`).join('')}</div>`;
   if(c.show==='start')body=`<p>${m.start}</p><p>"It's ${p.length.toLowerCase()} at Hocking. You can earn ${p.certs.slice(0,2).join(' and ')} along the way."</p>`;
+  if(c.show==='pay'&&!c0.pay)c.show='start';
   if(c.show==='pay')body=`<p>"Guess what a ${c0.title.toLowerCase()} earns in a year. Drag the slider."</p>
    <input type="range" id="g" min="20000" max="150000" step="1000" value="50000"><p><b id="gv">$50,000</b></p><button class="btn" id="rv">Lock in my guess</button><div id="ans"></div>`;
   $('#oc').innerHTML=`<div class="outcome" style="border-color:${p.color}">${body}<p id="cont" style="margin:14px 0 0;${c.show==='pay'?'display:none':''}"><button class="btn" id="nx">Continue ➜</button></p></div>`;
   $('#nx').onclick=()=>scene(c.next);
   if(c.show==='pay'){const g=$('#g');g.oninput=()=>$('#gv').textContent='$'+(+g.value).toLocaleString();
    $('#rv').onclick=()=>{const d=+g.value-c0.pay,close=Math.abs(d)<8000;
-    $('#ans').innerHTML=`<p><b>${close?'Nice guess!':d<0?'Higher!':'A little lower.'}</b> The national median is <b>$${c0.pay.toLocaleString()}</b> a year (BLS, May 2024), and jobs are projected to change by <b>${c0.growth}</b> over ten years. Demand: <b>${p.demand.label}</b>. ${p.demand.why}</p>`;
+    $('#ans').innerHTML=`<p><b>${close?'Nice guess!':d<0?'Higher!':'A little lower.'}</b> The national median is <b>$${c0.pay.toLocaleString()}</b> a year (BLS, May 2025), and jobs are projected to change by <b>${c0.growth}</b> from 2025 to 2035. Demand: <b>${p.demand.label}</b>. ${p.demand.why}</p>`;
     $('#rv').remove();$('#cont').style.display='block'}}
  });
 }
 
 /* ---------- results ---------- */
-const $$=n=>'$'+n.toLocaleString();
+const $$=n=>n==null?'Varies':'$'+n.toLocaleString();
 function card(p,pct){
- const max=Math.max(...p.careers.map(c=>c.pay),49500);
+ const max=Math.max(...p.careers.map(c=>c.pay||0),49500);
  const q=encodeURIComponent(p.careers[0].title.split(' (')[0].split(' or ')[0]);
  return`<div class="card match" style="--c:${p.color}"><div class="ic">${p.icon}</div>${pct!=null?`<span class="pct">${pct}% match</span>`:''}<h2>${p.name}</h2>
  ${p.img?`<img class="photo" src="${p.img}" alt="${p.name} students at Hocking College">`:''}<p>${p.pitch}</p>
  <div class="tabs">${['Overview','A Day in the Life','Careers and Pay','Certifications','Demand and Jobs','Industry News','Learn More'].map((t,i)=>`<button class="tab${i?'':' on'}" data-i="${i}">${t}</button>`).join('')}</div>
  <div class="pane on"><p>${p.about}</p><p><b>Program:</b> ${p.length}</p><p><b>Interest code:</b> ${Object.keys(p.riasec).map(k=>RIASEC[k].name).join(', ')}</p><h3>What you'll do</h3><ul>${p.doing.map(d=>`<li>${d}</li>`).join('')}</ul></div>
  <div class="pane"><p class="small">Tap each moment to live the day.</p><div class="tl">${p.day.map((d,i)=>`<div class="step${i?'':' seen'}"><b>${d.t}</b><br>${d.txt}</div>`).join('')}</div></div>
- <div class="pane"><p class="small">National median yearly pay, May 2024, and projected job change 2024 to 2034 (U.S. Bureau of Labor Statistics).</p>
-  ${p.careers.map(c=>`<div class="job"><b>${c.title}</b>${c.what}<div class="pay"><div class="paybar" data-w="${Math.round(c.pay/max*100)}"></div><div><b>${$$(c.pay)}</b></div></div><span class="small">Job growth: <b>${c.growth}</b> · <a href="${c.src}" target="_blank" rel="noopener">${c.note}</a></span></div>`).join('')}
-  <div class="pay"><div class="paybar base" data-w="${Math.round(49500/max*100)}"></div><div class="small">${$$(49500)} median for all U.S. jobs</div></div></div>
+ <div class="pane"><p class="small">National median yearly pay, May 2025, and projected job change 2025 to 2035 (U.S. Bureau of Labor Statistics).</p>
+  ${p.careers.map(c=>`<div class="job"><b>${c.title}</b>${c.what}<div class="pay"><div class="paybar" data-w="${Math.round((c.pay||0)/max*100)}"></div><div><b>${$$(c.pay)}</b></div></div><span class="small">Job growth: <strong>${c.growth}</strong> · <a href="${c.src}" target="_blank" rel="noopener">${c.note}</a></span></div>`).join('')}
+  <div class="pay"><div class="paybar base" data-w="${Math.round(49500/max*100)}"></div><div class="small">${$$(49500)} median for all U.S. jobs (May 2024)</div></div></div>
  <div class="pane"><p>Credentials students work toward in this program:</p>${p.certs.map(c=>`<span class="cert">🏅 ${c}</span>`).join('')}<p class="small" style="margin-top:12px">Check the program page for the current list.</p></div>
  <div class="pane"><h3>How in demand is it?</h3><div class="meter5">${[1,2,3,4,5].map(n=>`<i class="${n<=p.demand.level?'on':''}"></i>`).join('')}</div><p><b>${p.demand.label}.</b> ${p.demand.why}</p>
-  <h3>Southeast Ohio</h3><p>${p.region.stat} <span class="small">(${p.region.year})</span></p>
+  <h3>Southeast Ohio</h3><p>${p.region.url?`<a href="${p.region.url}" target="_blank" rel="noopener">${p.region.stat}</a>`:`${p.region.stat} <span class="small">(${p.region.year})</span>`}</p>
   <p><a class="btn" style="background:${p.color};color:#fff" href="${p.jobs}" target="_blank" rel="noopener">See current job openings near Hocking</a></p>
   <p class="small">Opens a live job search within 50 miles of Nelsonville. Also try <a href="https://topjobs.ohio.gov" target="_blank" rel="noopener">Ohio's Top Jobs</a> and <a href="https://ohiomeansjobs.ohio.gov" target="_blank" rel="noopener">OhioMeansJobs</a>.</p></div>
- <div class="pane">${p.news.map(n=>`<div class="news"><span class="small">${n.date} · ${n.src}</span><br>${n.title} <a href="${n.url}" target="_blank" rel="noopener">Read more</a></div>`).join('')}</div>
+ <div class="pane">${p.news.length?'':'<p>No news collected yet for this field. Check the program page and BLS links under Learn More.</p>'}${p.news.map(n=>`<div class="news"><span class="small">${n.date} · ${n.src}</span><br>${n.title} <a href="${n.url}" target="_blank" rel="noopener">Read more</a></div>`).join('')}</div>
  <div class="pane"><ul class="links">
   <li><a href="${p.url}" target="_blank" rel="noopener">${p.name} at Hocking College</a>: courses, costs, and how to apply</li>
-  <li><a href="${p.careers[0].src}" target="_blank" rel="noopener">Occupational Outlook Handbook</a>: what the job is really like, from the U.S. Bureau of Labor Statistics</li>
+  <li><a href="https://www.bls.gov/ooh/a-z-index.htm" target="_blank" rel="noopener">Occupational Outlook Handbook</a>: what the job is really like, from the U.S. Bureau of Labor Statistics</li><li><a href="${p.careers[0].src}" target="_blank" rel="noopener">BLS Employment Projections</a>: pay and growth for every occupation</li>
   <li><a href="https://www.onetonline.org/find/quick?s=${q}" target="_blank" rel="noopener">O*NET OnLine</a>: skills, tasks, and related careers</li>
   <li><a href="https://www.careeronestop.org/Videos/CareerandClusterVideos/career-and-cluster-videos.aspx" target="_blank" rel="noopener">CareerOneStop career videos</a>: short videos of people doing the work</li>
   <li><a href="https://www.mynextmove.org/explore/ip" target="_blank" rel="noopener">O*NET Interest Profiler</a>: the official free career interest test</li>
@@ -227,7 +230,7 @@ function results(browse){
  scenery('results');window.scrollTo({top:0});
  const R=rank(),top=R[0].p,code=K.slice().sort((a,b)=>score[b]-score[a]).slice(0,3),mx=Math.max(1,...K.map(k=>score[k]));
  const show=(id,scroll)=>{const r=R.find(x=>x.p.id===id),d=$('#detail');d.innerHTML=card(r.p,browse?null:r.pct);wire(d);if(scroll)d.scrollIntoView({behavior:'smooth'})};
- app.innerHTML=browse?`<div class="hero" style="padding-top:20px"><h1>Explore Hocking programs</h1><p>Tap a program to see careers, pay, demand, and more.</p></div>`:
+ app.innerHTML=browse?`<div class="hero" style="padding-top:20px"><h1>Explore Hocking programs</h1><p>All ${PROGRAMS.length} Hocking College programs. Tap one to see careers, pay, demand, and more.</p></div>`:
  `<div class="hero" style="padding-top:10px"><div class="chap">Epilogue · Ten Years Later</div>
   <div class="card" style="text-align:left;border-left:8px solid ${top.color}"><p style="font-size:19px;margin:0">${fill(name?name+', i':'I')}${top.future.slice(1)}</p></div>
   <h1 style="margin-top:30px">Your Career Interest Code</h1>
@@ -237,10 +240,14 @@ function results(browse){
   ${code.map(k=>`<p><b style="color:${RIASEC[k].color}">${RIASEC[k].name}:</b> ${RIASEC[k].desc}</p>`).join('')}
   <p class="small" style="color:#556">This is a fun interest activity, not a test score. For the official version, take the <a href="https://www.mynextmove.org/explore/ip" target="_blank" rel="noopener">O*NET Interest Profiler</a> and talk with your school counselor.</p></div>
   <h2 style="margin-top:34px;text-align:center">Your best match at Hocking College</h2>`;
- app.insertAdjacentHTML('beforeend',`<div id="detail"></div><h3 style="margin-top:30px">${browse?'All programs':'Your other matches'}</h3>
-  <div class="minis">${R.map(r=>`<button class="mini" data-id="${r.p.id}"><div class="ic">${r.p.icon}</div><b>${r.p.name}</b>${browse?'':`<div class="bar"><i style="width:${r.pct}%"></i></div><span class="small">${r.pct}% match</span>`}</button>`).join('')}</div>
+ app.insertAdjacentHTML('beforeend',`<div id="detail"></div><h3 style="margin-top:30px">${browse?'All programs':'Your next best matches'}</h3>
+  ${browse?`<p><select class="field" id="sch" style="width:auto"><option value="">All schools (${R.length} programs)</option>${[...new Set(PROGRAMS.map(p=>p.school))].map(s=>`<option>${s}</option>`).join('')}</select></p>`:''}
+  <div class="minis" id="minis"></div>${browse?'':`<p style="text-align:center"><button class="btn ghost" id="more">See all ${R.length} programs ranked for you</button></p>`}
   <p style="margin-top:30px;text-align:center"><button class="btn" id="again">Play again with different choices</button></p>`);
- app.querySelectorAll('.mini').forEach(b=>b.onclick=()=>show(b.dataset.id,true));$('#again').onclick=welcome;
+ const minis=(list)=>{$('#minis').innerHTML=list.map(r=>`<button class="mini" data-id="${r.p.id}"><div class="ic">${r.p.icon}</div><b>${r.p.name}</b>${browse?`<div class="small">${r.p.school}</div>`:`<div class="bar"><i style="width:${r.pct}%"></i></div><span class="small">${r.pct}% match</span>`}</button>`).join('');app.querySelectorAll('.mini').forEach(b=>b.onclick=()=>show(b.dataset.id,true))};
+ if(browse){const R2=R.slice().sort((a,b)=>a.p.name.localeCompare(b.p.name));minis(R2);$('#sch').onchange=e=>minis(R2.filter(r=>!e.target.value||r.p.school===e.target.value))}
+ else{minis(R.slice(1,7));$('#more').onclick=e=>{minis(R.slice(1));e.target.remove()}}
+ $('#again').onclick=welcome;
  if(!browse)show(top.id);
  setTimeout(()=>app.querySelectorAll('.rbars .fill').forEach(f=>f.style.width=f.dataset.w+'%'),200);
 }
