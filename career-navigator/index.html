@@ -69,6 +69,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:12px;fl
 .dl .step{display:flex;gap:14px;align-items:flex-start}
 .sky{flex:none;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:24px}
 #report{display:none}
+@media print{body.printing #report{font-size:12px!important;line-height:1.35!important}.rp-head div[style]{font-size:32px!important}#report h1{font-size:26px!important}}
 @page{margin:0.5in}
 @media print{body.printing>*:not(#report){display:none!important}body.printing #report{display:block;font:13px/1.45 system-ui,sans-serif;color:#111;padding:10px 20px}
  body.printing{background:#fff!important}
