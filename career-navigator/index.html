@@ -68,6 +68,16 @@ header{display:flex;justify-content:space-between;align-items:center;gap:12px;fl
 .vid:hover .play{transform:scale(1.12)}
 .dl .step{display:flex;gap:14px;align-items:flex-start}
 .sky{flex:none;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:24px}
+#report{display:none}
+@page{margin:0.5in}
+@media print{body.printing>*:not(#report){display:none!important}body.printing #report{display:block;font:13px/1.45 system-ui,sans-serif;color:#111;padding:10px 20px}
+ body.printing{background:#fff!important}
+ #report h1{margin:0;font-size:30px}#report h2{font-size:16px;border-bottom:2px solid #2f6b3a;padding-bottom:3px;margin:12px 0 6px}#report p{margin:5px 0}
+ .rp-head{display:flex;justify-content:space-between;align-items:center;border-bottom:4px solid #2f6b3a;padding-bottom:8px}.rp-k{letter-spacing:2px;font-weight:700;color:#2f6b3a;font-size:12px}
+ .rp-big{font-size:16px}#report table{width:100%;border-collapse:collapse}#report td,#report th{border:1px solid #ccc;padding:3px 7px;text-align:left;vertical-align:top}#report th{background:#eef3ee}
+ .rp-bar{height:12px;border-radius:6px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ .rp-sign{display:flex;gap:40px;margin-top:26px;break-inside:avoid}.rp-sign div{flex:1;border-top:1px solid #111;padding-top:4px;font-size:12px}
+ #report tr{break-inside:avoid}}
 .cert{display:inline-block;background:#f3f5f7;border:2px solid var(--c);border-radius:999px;padding:6px 14px;margin:4px 6px 4px 0;font-weight:600;font-size:14px}
 .news{border-left:4px solid var(--c);background:#f3f5f7;border-radius:0 12px 12px 0;padding:12px 14px;margin-bottom:10px}
 .news a,.links a,.match a:not(.btn){color:var(--c);font-weight:700}
@@ -88,7 +98,7 @@ input[type=range]{width:100%;accent-color:#2f6b3a}
 <body class="bg-sunrise">
 <div id="scenery" aria-hidden="true"></div>
 <div class="wrap">
-  <header><div class="brand">HOCKING COLLEGE <span>CAREER NAVIGATOR</span></div><div class="hud" id="hud" title="Your interest profile so far"></div></header>
+  <header><a class="brand" href="./" title="Back to the beginning" style="text-decoration:none;color:inherit;cursor:pointer">HOCKING COLLEGE <span>CAREER NAVIGATOR</span></a><div class="hud" id="hud" title="Your interest profile so far"></div></header>
   <main id="app" aria-live="polite"></main>
 </div>
 <script src="data.js"></script>
@@ -246,6 +256,23 @@ function athletics(){const A=ATHLETICS,li=a=>a.map(([n,u])=>`<a class="cert" sty
  <h3>🏆 Highlights</h3>${[...A.highlights,...A.esports.highlights].map(n=>`<div class="news" style="border-color:#d4a017">${n.title} <a href="${n.url}" target="_blank" rel="noopener">Read more</a></div>`).join('')}
  <p><a class="btn" href="${A.url}" target="_blank" rel="noopener">Hawks Athletics</a> <a class="btn" style="background:#5b3fa8;color:#fff" href="${A.esports.url}" target="_blank" rel="noopener">Join Hawks Esports</a> <a class="btn ghost" style="color:#1b2430;border-color:#ccc" href="${A.esports.twitch}" target="_blank" rel="noopener">Watch on Twitch</a></p>
  <p class="small" style="color:#556">Love sports or gaming as a career? Check out Sports Management, Cybersecurity, and Film and Video Production too.</p></div>`}
+function report(R,code){
+ const d=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}),top=R.slice(0,5),mx=Math.max(1,...K.map(k=>score[k]));
+ let el=document.getElementById('report');if(!el){el=document.createElement('div');el.id='report';document.body.appendChild(el)}
+ el.innerHTML=`<div class="rp-head"><div><div class="rp-k">HOCKING COLLEGE CAREER NAVIGATOR</div><h1>Certificate of Completion</h1></div><div style="font-size:44px">🧭</div></div>
+ <p class="rp-big">This certifies that <b>${name||'_______________________'}</b> completed <i>The Longest Saturday</i> career interest adventure on ${d}.</p>
+ <h2>Career Interest Code: ${code.join('')}</h2>
+ ${code.map(k=>`<p><b>${RIASEC[k].name} (${k}):</b> ${RIASEC[k].desc}</p>`).join('')}
+ <table><tr><th>Interest area</th><th>Points</th><th style="width:45%"></th></tr>${K.slice().sort((a,b)=>score[b]-score[a]).map(k=>`<tr><td>${RIASEC[k].name}</td><td>${score[k]}</td><td><div class="rp-bar" style="width:${score[k]/mx*100}%;background:${RIASEC[k].color}"></div></td></tr>`).join('')}</table>
+ <h2>Top Hocking College Program Matches</h2>
+ <table><tr><th>#</th><th>Program</th><th>Match</th><th>Sample career and U.S. median pay</th><th>Demand</th></tr>${top.map((r,i)=>{const c=r.p.careers[0];return`<tr><td>${i+1}</td><td><b>${r.p.name}</b><br><span class="small">${r.p.school}</span></td><td>${r.pct}%</td><td>${c.title}${c.pay?`<br>$${c.pay.toLocaleString()} a year`:''}</td><td>${r.p.demand.label}</td></tr>`}).join('')}</table>
+ <p class="small">Pay is the national median from the U.S. Bureau of Labor Statistics (May 2025).</p>
+ <h2>My Next Steps</h2>
+ <p>☐ Visit the program page: ${R[0].p.url}<br>☐ Talk with my school counselor about these results<br>☐ Take the official O*NET Interest Profiler at mynextmove.org<br>☐ Schedule a visit to Hocking College in Nelsonville, Ohio</p>
+ <p class="small" style="margin-top:20px">This is an interest activity, not a test score. Results reflect the choices made during the story.</p>
+ <div class="rp-sign"><div>Student signature</div><div>Counselor or teacher</div></div>`;
+ document.body.classList.add('printing');window.print();setTimeout(()=>document.body.classList.remove('printing'),500);
+}
 function results(browse){
  scenery('results');window.scrollTo({top:0});
  const R=rank(),top=R[0].p,code=K.slice().sort((a,b)=>score[b]-score[a]).slice(0,3),mx=Math.max(1,...K.map(k=>score[k]));
@@ -263,11 +290,12 @@ function results(browse){
  app.insertAdjacentHTML('beforeend',`<div id="detail"></div><h3 style="margin-top:30px">${browse?'All programs':'Your next best matches'}</h3>
   ${browse?`<p><select class="field" id="sch" style="width:auto"><option value="">All schools (${R.length} programs)</option>${[...new Set(PROGRAMS.map(p=>p.school))].map(s=>`<option>${s}</option>`).join('')}</select></p>`:''}
   <div class="minis" id="minis"></div>${browse?'':`<p style="text-align:center"><button class="btn ghost" id="more">See all ${R.length} programs ranked for you</button></p>`}
-  ${athletics()}<p style="margin-top:30px;text-align:center"><button class="btn" id="again">Play again with different choices</button></p>`);
+  ${athletics()}<p style="margin-top:30px;text-align:center">${browse?'':'<button class="btn" id="print" style="margin-right:10px">🖨️ Print my completion report</button>'}<button class="btn" id="again">Play again with different choices</button></p>`);
  const minis=(list)=>{$('#minis').innerHTML=list.map(r=>`<button class="mini" data-id="${r.p.id}"><div class="ic">${r.p.icon}</div><b>${r.p.name}</b>${browse?`<div class="small">${r.p.school}</div>`:`<div class="bar"><i style="width:${r.pct}%"></i></div><span class="small">${r.pct}% match</span>`}</button>`).join('');app.querySelectorAll('.mini').forEach(b=>b.onclick=()=>show(b.dataset.id,true))};
  if(browse){const R2=R.slice().sort((a,b)=>a.p.name.localeCompare(b.p.name));minis(R2);$('#sch').onchange=e=>minis(R2.filter(r=>!e.target.value||r.p.school===e.target.value))}
  else{minis(R.slice(1,7));$('#more').onclick=e=>{minis(R.slice(1));e.target.remove()}}
  $('#again').onclick=welcome;
+ if(!browse)$('#print').onclick=()=>report(R,code);
  if(!browse)show(top.id);
  setTimeout(()=>app.querySelectorAll('.rbars .fill').forEach(f=>f.style.width=f.dataset.w+'%'),200);
 }
