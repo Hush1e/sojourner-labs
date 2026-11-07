@@ -60,7 +60,7 @@ window.PROGRAM_FIELDS = {
   /* Chapter 5: camps now cover every subject area, not just five. */
   S.offer.text = ["Before you can process all that, the shelter director hands you a flyer. \"Hocking College runs free summer camps for high schoolers. Pick ONE. Spots fill up fast.\""];
   S.offer.choices = [
-    { label: "Cyber camp: hack a practice network and catch the hackers", icon: "💻", p: { I: 2, C: 1 }, f: { tech: 3 }, b: "cyber", out: "A real capture the flag competition with prizes? You're signed up before you finish reading.", next: "evening" },
+    { label: "Cyber and AI camp: hack a practice network and train an AI to catch the hackers", icon: "💻", p: { I: 2, C: 1 }, f: { tech: 3 }, b: "cyber", out: "A real capture the flag competition with prizes? You're signed up before you finish reading.", next: "evening" },
     { label: "Nursing camp: the simulation lab with a mannequin that breathes and talks", icon: "🩺", p: { S: 2, I: 1 }, f: { health: 3 }, b: "nursing", out: "You picture yourself saving the mannequin's life in front of everyone. Bring it on.", next: "evening" },
     { label: "Dental camp: clean teeth on a practice patient in a real clinic", icon: "🦷", p: { S: 2, R: 1 }, f: { health: 3 }, b: "dental-hygiene", out: "You never thought teeth could be interesting. Turns out they pay really well.", next: "evening" },
     { label: "Wildlife camp: tracking, trapping, and field research", icon: "🦌", p: { R: 2, I: 1 }, f: { outdoors: 2, animals: 1 }, b: "wildlife", out: "You picture yourself tracking a bobcat through the Hocking Hills, and you grin.", next: "evening" },

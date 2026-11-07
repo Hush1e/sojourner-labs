@@ -2,6 +2,12 @@
    Each pattern is matched against the credential text; the first match becomes the link.
    Add a line here to link a new credential. */
 window.CERT_LINKS = [
+  [/AWS Certified Cloud Practitioner/i, "https://aws.amazon.com/certification/certified-cloud-practitioner/"],
+  [/AWS Certified AI Practitioner/i, "https://aws.amazon.com/certification/certified-ai-practitioner/"],
+  [/Google Cybersecurity/i, "https://grow.google/certificates/cybersecurity/"],
+  [/Google IT Support/i, "https://grow.google/certificates/it-support/"],
+  [/Google AI Essentials/i, "https://grow.google/ai-essentials/"],
+  [/Hocking AI certificate|Data Center Technician certificate/i, "https://www.hocking.edu/cyber-security-and-network-systems"],
   [/CySA\+/i, "https://www.comptia.org/certifications/cybersecurity-analyst"],
   [/Security\+/i, "https://www.comptia.org/certifications/security"],
   [/Network\+/i, "https://www.comptia.org/certifications/network"],

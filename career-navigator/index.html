@@ -64,11 +64,15 @@ header{display:flex;justify-content:space-between;align-items:center;gap:12px;fl
 .pay{display:grid;grid-template-columns:1fr 110px;gap:4px 12px;align-items:center;margin:8px 0}
 .paybar{height:14px;border-radius:999px;background:var(--c);width:0;transition:width .8s}.paybar.base{background:#c9ced8}
 .meter5{display:flex;gap:6px;margin:8px 0}.meter5 i{width:36px;height:12px;border-radius:999px;background:#e1e5ec}.meter5 i.on{background:var(--c)}
-.vid{display:flex;align-items:center;gap:16px;min-height:150px;padding:20px;border-radius:16px;margin:4px 0 16px;background:#1b2430 center/cover;color:#fff!important;text-decoration:none;font-weight:400}
-.vid .play{flex:none;width:64px;height:64px;border-radius:50%;background:var(--c);display:grid;place-items:center;font-size:26px;box-shadow:0 6px 18px rgba(0,0,0,.35);transition:transform .2s}
-.vid:hover .play{transform:scale(1.12)}
-.vids{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin-bottom:16px}
-.vid.sm{min-height:0;padding:12px;margin:0;font-size:14px;gap:10px;border-radius:12px}.vid.sm .play{width:38px;height:38px;font-size:15px}
+.vid{display:flex;align-items:center;gap:18px;padding:14px;border-radius:16px;margin:4px 0 16px;background:#1b2430;color:#fff!important;text-decoration:none;font-weight:400}
+.thumb{position:relative;flex:none;width:150px;height:96px;border-radius:12px;display:grid;place-items:center;overflow:hidden;box-shadow:inset 0 0 0 2px rgba(255,255,255,.15)}
+.thumb.big{width:210px;height:130px}.thumb .art{font-size:30px;letter-spacing:4px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.4))}.thumb.big .art{font-size:42px}
+.thumb .play{position:absolute;right:8px;bottom:8px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);color:#1b2430;display:grid;place-items:center;font-size:14px;transition:transform .2s}
+.thumb.big .play{width:46px;height:46px;font-size:18px}
+.vid:hover .play,.vcard:hover .play{transform:scale(1.15)}
+.vcard{display:flex;flex-direction:column;gap:8px;text-decoration:none;color:#1b2430!important;font-weight:700;font-size:14px}.vcard .thumb{width:100%;height:110px}
+.vids{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-bottom:18px}
+@media(max-width:560px){.vid{flex-direction:column;align-items:flex-start}.thumb.big{width:100%}}
 .dl .step{display:flex;gap:14px;align-items:flex-start}
 .sky{flex:none;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:24px}
 #report{display:none}
@@ -225,11 +229,12 @@ function mentor(S){
 const $$=n=>n==null?'Varies':'$'+n.toLocaleString();
 function sky(t){const m=/(\d+):?(\d*)\s*(AM|PM)/i.exec(t||'');if(!m)return['⏱️','linear-gradient(#cfe3f5,#eef4fa)'];let hr=+m[1]%12+(/PM/i.test(m[3])?12:0);
  return hr<7?['🌅','linear-gradient(#f7b267,#f4845f)']:hr<11?['🌤️','linear-gradient(#9ad0f5,#d6ecfb)']:hr<15?['☀️','linear-gradient(#ffd85c,#ffef9f)']:hr<19?['🌇','linear-gradient(#f79d65,#f4c16b)']:['🌙','linear-gradient(#2b3a67,#4b5d8f)']}
+function vArt(p,x){if(x[2])return x[2];const f=(window.PROGRAM_FIELDS||{})[p.id]||[],F={tech:'💻',health:'🩺',outdoors:'🌲',animals:'🐾',food:'🍳',art:'🎨',media:'🎬',helping:'🤝',safety:'🚨',build:'🔧',business:'📈',sports:'🏆'};return p.icon+f.map(k=>F[k]).join('')}
 function dayVideo(p){let v=(window.VIDEOS||{})[p.id];if(!v)return'';if(!Array.isArray(v[0]))v=[v];
- const bg=p.img?`background-image:linear-gradient(rgba(10,20,30,.45),rgba(10,20,30,.7)),url('${p.img}')`:'';
- const main=`<a class="vid" href="${videoUrl(v[0][0])}" target="_blank" rel="noopener" style="${bg}"><span class="play">▶</span><span><b>Watch a real day on the job</b><br>${v[0][1]} · official career video from CareerOneStop, U.S. Department of Labor ↗</span></a>`;
+ const thumb=(x,big)=>`<span class="thumb${big?' big':''}" style="background:linear-gradient(135deg,${p.color},#0d1b2a)"><span class="art">${vArt(p,x)}</span><span class="play">▶</span></span>`;
+ const main=`<a class="vid" href="${videoUrl(v[0][0])}" target="_blank" rel="noopener">${thumb(v[0],1)}<span><b style="font-size:18px">Watch a real day on the job</b><br>${v[0][1]}<br><span style="opacity:.75;font-size:13px">Official career video from CareerOneStop, U.S. Department of Labor ↗</span></span></a>`;
  if(v.length<2)return main;
- return main+`<p style="margin:0 0 8px"><b>More careers in this field:</b> each is its own day in the life video.</p><div class="vids">${v.slice(1).map(x=>`<a class="vid sm" href="${videoUrl(x[0])}" target="_blank" rel="noopener"><span class="play">▶</span><span>${x[1]} ↗</span></a>`).join('')}</div>`}
+ return main+`<p style="margin:0 0 8px"><b>More careers in this field:</b> each is its own day in the life video.</p><div class="vids">${v.slice(1).map(x=>`<a class="vcard" href="${videoUrl(x[0])}" target="_blank" rel="noopener">${thumb(x)}<span class="vt">${x[1]} ↗</span></a>`).join('')}</div>`}
 function card(p,pct){
  const max=Math.max(...p.careers.map(c=>c.pay||0),49500);
  const q=encodeURIComponent(p.careers[0].title.split(' (')[0].split(' or ')[0]);
