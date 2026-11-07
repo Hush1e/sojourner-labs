@@ -39,8 +39,10 @@ Ohio's Data Protection Act (Ohio Revised Code Chapter 1354) gives businesses an 
 
 | License | Team Size | Annual Price |
 |---|---|---|
-| Small Business | Up to 50 employees | $499 |
-| Midsize | 51 to 250 employees | $999 |
+| Starter | Up to 15 employees | $249 |
+| Team | Up to 50 employees | $599 |
+| Growth | 51 to 250 employees | $12 per employee |
+| Live Workshop | Optional add on, led by the founder | $750 |
 | Custom | Over 250 employees or custom scenarios | Quoted on request |
 
 ## About the Founder
