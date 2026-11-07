@@ -90,6 +90,7 @@ input[type=range]{width:100%;accent-color:#2f6b3a}
 <script src="programs-more.js"></script>
 <script src="story.js"></script>
 <script src="athletics.js"></script>
+<script src="cert-links.js"></script>
 <script>
 const app=document.getElementById('app'),K=Object.keys(RIASEC);
 let score,name='',steps=0;
@@ -207,7 +208,7 @@ function card(p,pct){
  <div class="pane"><p class="small">National median yearly pay, May 2025, and projected job change 2025 to 2035 (U.S. Bureau of Labor Statistics).</p>
   ${p.careers.map(c=>`<div class="job"><b>${c.title}</b>${c.what}<div class="pay"><div class="paybar" data-w="${Math.round((c.pay||0)/max*100)}"></div><div><b>${$$(c.pay)}</b></div></div><span class="small">Job growth: <strong>${c.growth}</strong> · <a href="${c.src}" target="_blank" rel="noopener">${c.note}</a></span></div>`).join('')}
   <div class="pay"><div class="paybar base" data-w="${Math.round(49500/max*100)}"></div><div class="small">${$$(49500)} median for all U.S. jobs (May 2024)</div></div></div>
- <div class="pane"><p>Credentials students work toward in this program:</p>${p.certs.map(c=>`<span class="cert">🏅 ${c}</span>`).join('')}<p class="small" style="margin-top:12px">Check the program page for the current list.</p></div>
+ <div class="pane"><p>Credentials students work toward in this program:</p>${p.certs.map(c=>{const u=certLink(c);return u?`<a class="cert" style="text-decoration:none;color:#1b2430" href="${u}" target="_blank" rel="noopener">🏅 ${c} ↗</a>`:`<span class="cert">🏅 ${c}</span>`}).join('')}<p class="small" style="margin-top:12px">Tap a credential with ↗ to see its official page. Check the program page for the current list.</p></div>
  <div class="pane"><h3>How in demand is it?</h3><div class="meter5">${[1,2,3,4,5].map(n=>`<i class="${n<=p.demand.level?'on':''}"></i>`).join('')}</div><p><b>${p.demand.label}.</b> ${p.demand.why}</p>
   <h3>Southeast Ohio</h3><p>${p.region.url?`<a href="${p.region.url}" target="_blank" rel="noopener">${p.region.stat}</a>`:`${p.region.stat} <span class="small">(${p.region.year})</span>`}</p>
   <p><a class="btn" style="background:${p.color};color:#fff" href="${p.jobs}" target="_blank" rel="noopener">See current job openings near Hocking</a></p>

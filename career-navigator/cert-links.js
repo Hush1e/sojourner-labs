@@ -1,0 +1,35 @@
+/* Official pages for credentials named in program "certs" lists.
+   Each pattern is matched against the credential text; the first match becomes the link.
+   Add a line here to link a new credential. */
+window.CERT_LINKS = [
+  [/CySA\+/i, "https://www.comptia.org/certifications/cybersecurity-analyst"],
+  [/Security\+/i, "https://www.comptia.org/certifications/security"],
+  [/Network\+/i, "https://www.comptia.org/certifications/network"],
+  [/A\+/i, "https://www.comptia.org/certifications/a"],
+  [/PCEP/i, "https://pythoninstitute.org/pcep"],
+  [/NCLEX/i, "https://www.nclex.com"],
+  [/ServSafe/i, "https://www.servsafe.com"],
+  [/Pastry Culinarian|Certified Culinarian|American Culinary Federation/i, "https://www.acfchefs.org/ACF/Certify"],
+  [/Peace Officer/i, "https://www.ohioattorneygeneral.gov/Law-Enforcement/Ohio-Peace-Officer-Training-Academy"],
+  [/National Board Dental Hygiene/i, "https://jcnde.ada.org/nbdhe"],
+  [/CDCA|WREB|CITA/i, "https://www.cdcaexams.org"],
+  [/Dental Board|EFDA board/i, "https://dental.ohio.gov"],
+  [/CAHIMS/i, "https://www.himss.org/resources-certification/cahims"],
+  [/CMA|Certified Medical Assistant/i, "https://www.aama-ntl.org/cma-aama-exam"],
+  [/National Registry|EMT|paramedic/i, "https://www.nremt.org"],
+  [/Firefighter I|firefighter certification/i, "https://ems.ohio.gov"],
+  [/CPDT/i, "https://www.ccpdt.org"],
+  [/NDGAA|grooming cert/i, "https://www.nationaldoggroomers.com"],
+  [/American Welding Society|AWS\)/i, "https://www.aws.org/certification"],
+  [/Operator Certification|Ohio EPA/i, "https://epa.ohio.gov/divisions-and-offices/drinking-and-ground-waters/operator-certification"],
+  [/Ohio Professional Registry/i, "https://www.occrra.org"],
+  [/Class A|Class B|CDL/i, "https://www.bmv.ohio.gov/dl-cdl.aspx"],
+  [/Short Term Certificate Grant/i, "https://highered.ohio.gov"],
+  [/Pro Tools/i, "https://www.avid.com/learn-and-support/avid-training"],
+  [/Society of American Foresters/i, "https://www.eforester.org"],
+  [/CLO 3D/i, "https://www.clo3d.com"],
+  [/CPR|Basic Life Support/i, "https://cpr.heart.org"],
+  [/Ohio Transfer Module/i, "https://highered.ohio.gov/initiatives/transfer-credit/ohio-transfer-module"],
+  [/Wildland firefighting/i, "https://www.nwcg.gov"],
+];
+window.certLink = t => { for (const [re, u] of window.CERT_LINKS) if (re.test(t)) return u; return null; };
