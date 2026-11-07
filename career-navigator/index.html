@@ -89,6 +89,7 @@ input[type=range]{width:100%;accent-color:#2f6b3a}
 <script src="data.js"></script>
 <script src="programs-more.js"></script>
 <script src="story.js"></script>
+<script src="athletics.js"></script>
 <script>
 const app=document.getElementById('app'),K=Object.keys(RIASEC);
 let score,name='',steps=0;
@@ -136,9 +137,9 @@ function welcome(){
   <h1>The Longest Saturday</h1>
   <p style="font-size:20px;max-width:640px;margin:0 auto 18px">A choose your own adventure career quiz. One wild day in Hocking County. About 10 big decisions. Every choice you make reveals what kind of work fits you, and at the end you'll get your career interest code and your best matching Hocking College programs.</p>
   <input class="field" id="nm" placeholder="Your first name" maxlength="20"><br>
-  <button class="btn" id="go">Start the adventure</button> <button class="btn ghost" id="all">Just show me the programs</button>
+  <button class="btn" id="go">Start the adventure</button> <button class="btn ghost" id="all">Just show me the programs</button> <button class="btn ghost" id="ath">Athletics and Esports</button>
   <p class="small" style="margin-top:22px">Based on the Holland career interest model (RIASEC) used by the U.S. Department of Labor. Want the official version too? Try the free <a style="color:#f2c14e" href="https://www.mynextmove.org/explore/ip" target="_blank" rel="noopener">O*NET Interest Profiler</a>.</p></div>`;
- $('#go').onclick=()=>{name=($('#nm').value.trim().split(' ')[0]||'');scene('start')};$('#all').onclick=()=>results(true);
+ $('#go').onclick=()=>{name=($('#nm').value.trim().split(' ')[0]||'');scene('start')};$('#all').onclick=()=>results(true);$('#ath').onclick=()=>{results(true);setTimeout(()=>document.querySelector('.card[style*="f2c14e"]').scrollIntoView({behavior:'smooth'}),100)};
 }
 
 function type(el,paras,cb){
@@ -226,6 +227,14 @@ function wire(el){
   panes[t.dataset.i].querySelectorAll('.paybar').forEach(b=>setTimeout(()=>b.style.width=b.dataset.w+'%',50))});
  el.querySelectorAll('.tl .step').forEach(s=>s.onclick=()=>{const n=s.nextElementSibling;if(n)n.classList.add('seen')});
 }
+
+function athletics(){const A=ATHLETICS,li=a=>a.map(x=>`<span class="cert">${x}</span>`).join('');
+ return`<div class="card" style="border-top:10px solid #f2c14e;margin-top:34px"><div style="font-size:54px">🏅🎮</div><h2 style="margin:6px 0">Hocking Hawks Athletics and Esports</h2><p>${A.intro}</p>
+ <div class="cols"><div><h3>Men's teams</h3>${li(A.men)}<h3>Women's teams</h3>${li(A.women)}<h3>Coed</h3>${li(A.coed)}</div>
+ <div><h3>🎮 Hawks Esports</h3><p>${A.esports.about}</p><p><b>Games:</b> ${A.esports.games.join(', ')}</p></div></div>
+ <h3>🏆 Highlights</h3>${[...A.highlights,...A.esports.highlights].map(n=>`<div class="news" style="border-color:#d4a017">${n.title} <a href="${n.url}" target="_blank" rel="noopener">Read more</a></div>`).join('')}
+ <p><a class="btn" href="${A.url}" target="_blank" rel="noopener">Hawks Athletics</a> <a class="btn" style="background:#5b3fa8;color:#fff" href="${A.esports.url}" target="_blank" rel="noopener">Join Hawks Esports</a> <a class="btn ghost" style="color:#1b2430;border-color:#ccc" href="${A.esports.twitch}" target="_blank" rel="noopener">Watch on Twitch</a></p>
+ <p class="small" style="color:#556">Love sports or gaming as a career? Check out Sports Management, Cybersecurity, and Film and Video Production too.</p></div>`}
 function results(browse){
  scenery('results');window.scrollTo({top:0});
  const R=rank(),top=R[0].p,code=K.slice().sort((a,b)=>score[b]-score[a]).slice(0,3),mx=Math.max(1,...K.map(k=>score[k]));
@@ -243,7 +252,7 @@ function results(browse){
  app.insertAdjacentHTML('beforeend',`<div id="detail"></div><h3 style="margin-top:30px">${browse?'All programs':'Your next best matches'}</h3>
   ${browse?`<p><select class="field" id="sch" style="width:auto"><option value="">All schools (${R.length} programs)</option>${[...new Set(PROGRAMS.map(p=>p.school))].map(s=>`<option>${s}</option>`).join('')}</select></p>`:''}
   <div class="minis" id="minis"></div>${browse?'':`<p style="text-align:center"><button class="btn ghost" id="more">See all ${R.length} programs ranked for you</button></p>`}
-  <p style="margin-top:30px;text-align:center"><button class="btn" id="again">Play again with different choices</button></p>`);
+  ${athletics()}<p style="margin-top:30px;text-align:center"><button class="btn" id="again">Play again with different choices</button></p>`);
  const minis=(list)=>{$('#minis').innerHTML=list.map(r=>`<button class="mini" data-id="${r.p.id}"><div class="ic">${r.p.icon}</div><b>${r.p.name}</b>${browse?`<div class="small">${r.p.school}</div>`:`<div class="bar"><i style="width:${r.pct}%"></i></div><span class="small">${r.pct}% match</span>`}</button>`).join('');app.querySelectorAll('.mini').forEach(b=>b.onclick=()=>show(b.dataset.id,true))};
  if(browse){const R2=R.slice().sort((a,b)=>a.p.name.localeCompare(b.p.name));minis(R2);$('#sch').onchange=e=>minis(R2.filter(r=>!e.target.value||r.p.school===e.target.value))}
  else{minis(R.slice(1,7));$('#more').onclick=e=>{minis(R.slice(1));e.target.remove()}}
