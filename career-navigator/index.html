@@ -30,6 +30,7 @@ header{display:flex;justify-content:space-between;align-items:center;gap:12px;fl
 .story{background:rgba(0,0,0,.42);backdrop-filter:blur(6px);border-radius:20px;padding:22px 26px;font-size:19px}
 .story p{margin:0 0 12px}.story p:last-child{margin:0;font-weight:700}
 .choices{display:grid;gap:12px;margin-top:18px}
+.choices.many{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}.many .choice{background:rgba(8,14,32,.85);position:relative;z-index:2;font-size:15px;padding:10px 12px;gap:10px}.many .choice .i{font-size:26px}
 .choice{display:flex;gap:16px;align-items:center;text-align:left;background:rgba(0,0,0,.35);border:2px solid rgba(255,255,255,.35);color:var(--ink);border-radius:16px;padding:14px 18px;font-size:18px;cursor:pointer;transition:transform .15s,background .15s;animation:rise .45s both}
 .choice:hover,.choice:focus{transform:translateY(-3px) scale(1.01);background:rgba(0,0,0,.5);outline:none;border-color:var(--gold)}
 .choice .i{font-size:32px}
@@ -114,7 +115,7 @@ input[type=range]{width:100%;accent-color:#2f6b3a}
 <script src="videos.js"></script>
 <script>
 const app=document.getElementById('app'),K=Object.keys(RIASEC);
-let score,fscore={},badges=[],name='',steps=0;
+let score,boost={},fscore={},badges=[],name='',steps=0;
 const $=s=>document.querySelector(s);
 const fill=t=>t.replace(/\{name\}/g,name||'friend');
 const segs=s=>Array.from(new Intl.Segmenter().segment(s),x=>x.segment);
@@ -152,11 +153,11 @@ function rank(){
  const ft=Object.values(fscore).reduce((a,b)=>a+b,0)||1,fmax=Math.max(1,...Object.values(fscore));
  return PROGRAMS.map(p=>{const v=K.map(k=>p.riasec[k]||0),nv=Math.hypot(...v),cos=u.reduce((s,x,i)=>s+x*v[i],0)/(nu*nv),h=w.reduce((s,x,i)=>s+x*v[i],0)/nv;
   const pf=(window.PROGRAM_FIELDS||{})[p.id]||[],fit=pf.length?Math.max(...pf.map(f=>(fscore[f]||0)/fmax))*0.75+pf.reduce((s,f)=>s+(fscore[f]||0),0)/ft*0.25:0;
-  const s=(h/3.6*0.4+cos*0.1+fit*0.5)*(p.flex?0.5:1);
+  const s=(h/3.6*0.4+cos*0.1+fit*0.5+(boost[p.id]||0)*0.12)*(p.flex?0.5:1);
   return{p,s,pct:Math.max(1,Math.min(99,Math.round(s*100)))}}).sort((a,b)=>b.s-a.s);
 }
 function welcome(){
- score=Object.fromEntries(K.map(k=>[k,0]));fscore={};badges=[];steps=0;hud();scenery('sunrise');
+ score=Object.fromEntries(K.map(k=>[k,0]));fscore={};boost={};badges=[];steps=0;hud();scenery('sunrise');
  app.innerHTML=`<div class="hero"><div class="art">${art('🌅🥾🍳🩺💻🛡️')}</div>
   <h1>The Longest Saturday</h1>
   <p style="font-size:20px;max-width:640px;margin:0 auto 18px">A choose your own adventure career quiz. One wild day in Hocking County. About 10 big decisions. Every choice you make reveals what kind of work fits you, and at the end you'll get your career interest code and your best matching Hocking College programs.</p>
@@ -180,11 +181,11 @@ function scene(id){
  type($('#st'),S.text.map(fill),()=>choices(S));
 }
 function choices(S,after){
- const ch=$('#ch');
+ const ch=$('#ch');ch.classList.toggle('many',S.choices.length>8);
  ch.innerHTML=S.choices.map((c,k)=>`<button class="choice" style="animation-delay:${k*.1}s" data-k="${k}"><span class="i">${c.icon}</span>${fill(c.label)}</button>`).join('');
  ch.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
   const c=S.choices[b.dataset.k];
-  Object.entries(c.p).forEach(([k,v])=>score[k]+=v);let nb='';Object.entries(c.f||{}).forEach(([k,v])=>{fscore[k]=(fscore[k]||0)+v;if(fscore[k]>=4&&!badges.includes(k)){badges.push(k);nb=BADGES[k]}});steps++;hud();
+  Object.entries(c.p).forEach(([k,v])=>score[k]+=v);let nb='';Object.entries(c.f||{}).forEach(([k,v])=>{fscore[k]=(fscore[k]||0)+v;if(fscore[k]>=4&&!badges.includes(k)){badges.push(k);nb=BADGES[k]}});if(c.b)boost[c.b]=(boost[c.b]||0)+1;steps++;hud();
   ch.querySelectorAll('.choice').forEach(x=>{x.disabled=true;x.style.opacity=x===b?1:.3});
   const go=()=>c.next==='end'?results():scene(c.next);
   if(after)return after(c);

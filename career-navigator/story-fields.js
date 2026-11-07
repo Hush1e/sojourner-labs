@@ -60,14 +60,28 @@ window.PROGRAM_FIELDS = {
   /* Chapter 5: camps now cover every subject area, not just five. */
   S.offer.text = ["Before you can process all that, the shelter director hands you a flyer. \"Hocking College runs free summer camps for high schoolers. Pick ONE. Spots fill up fast.\""];
   S.offer.choices = [
-    { label: "Cyber camp: hack a practice network and catch the hackers", icon: "💻", p: { I: 2, C: 1 }, f: { tech: 3 }, out: "A real capture the flag competition with prizes? You're signed up before you finish reading.", next: "evening" },
-    { label: "Healthcare camp: the simulation lab with a mannequin that breathes and talks", icon: "🩺", p: { S: 2, I: 1 }, f: { health: 3 }, out: "You picture yourself saving the mannequin's life in front of everyone. Bring it on.", next: "evening" },
-    { label: "Wilderness camp: tracking, fishing, and field research", icon: "🦌", p: { R: 2, I: 1 }, f: { outdoors: 2, animals: 1 }, out: "You picture yourself waist deep in a creek with a net, and you grin.", next: "evening" },
-    { label: "Canine and animal camp: train dogs and work with horses", icon: "🐕", p: { R: 2, S: 1 }, f: { animals: 3 }, out: "A week of puppies and horses. Honestly the easiest decision of your life.", next: "evening" },
-    { label: "First responder camp: fire, EMS, and police scenarios", icon: "🚒", p: { R: 1, E: 2 }, f: { safety: 3 }, out: "Running real training drills in real gear sounds like exactly your speed.", next: "evening" },
-    { label: "Culinary camp: cook in a professional kitchen", icon: "👩‍🍳", p: { A: 2, R: 1 }, f: { food: 3 }, out: "You're already planning what you'd make on the final day.", next: "evening" },
-    { label: "Build camp: welding, engines, and heavy equipment", icon: "🔧", p: { R: 3 }, f: { build: 3 }, out: "Driving an excavator at sixteen? That's going straight on your story.", next: "evening" },
-    { label: "Creative camp: shoot a short film, record a song, or design clothes", icon: "🎬", p: { A: 3 }, f: { media: 2, art: 1 }, out: "You already have three ideas, and one of them is honestly genius.", next: "evening" },
+    { label: "Cyber camp: hack a practice network and catch the hackers", icon: "💻", p: { I: 2, C: 1 }, f: { tech: 3 }, b: "cyber", out: "A real capture the flag competition with prizes? You're signed up before you finish reading.", next: "evening" },
+    { label: "Nursing camp: the simulation lab with a mannequin that breathes and talks", icon: "🩺", p: { S: 2, I: 1 }, f: { health: 3 }, b: "nursing", out: "You picture yourself saving the mannequin's life in front of everyone. Bring it on.", next: "evening" },
+    { label: "Dental camp: clean teeth on a practice patient in a real clinic", icon: "🦷", p: { S: 2, R: 1 }, f: { health: 3 }, b: "dental-hygiene", out: "You never thought teeth could be interesting. Turns out they pay really well.", next: "evening" },
+    { label: "Wildlife camp: tracking, trapping, and field research", icon: "🦌", p: { R: 2, I: 1 }, f: { outdoors: 2, animals: 1 }, b: "wildlife", out: "You picture yourself tracking a bobcat through the Hocking Hills, and you grin.", next: "evening" },
+    { label: "Fish and hatchery camp: raise trout and survey streams", icon: "🐟", p: { R: 2, I: 1 }, f: { outdoors: 2, animals: 1 }, b: "fish", out: "Waist deep in a creek with a net all week. Perfect.", next: "evening" },
+    { label: "Forestry camp: chainsaws, timber cruising, and wildland fire", icon: "🌲", p: { R: 3 }, f: { outdoors: 3 }, b: "forest", out: "Real chainsaw training? Your parents are going to have questions.", next: "evening" },
+    { label: "Dog camp: train dogs to sit, stay, and track", icon: "🐕", p: { R: 2, S: 1 }, f: { animals: 3 }, b: "canine", out: "A week of dogs. Honestly the easiest decision of your life.", next: "evening" },
+    { label: "Horse camp: shoe horses at the farrier forge", icon: "🐴", p: { R: 3 }, f: { animals: 2, build: 1 }, b: "farrier", out: "Hammer, fire, and horses. That is a very cool combination.", next: "evening" },
+    { label: "Police camp: crime scenes and the training range", icon: "🚓", p: { E: 2, R: 1 }, f: { safety: 3 }, b: "police", out: "Running real training scenarios sounds like exactly your speed.", next: "evening" },
+    { label: "Fire camp: suit up and fight a training fire", icon: "🚒", p: { R: 2, S: 1 }, f: { safety: 3 }, b: "fire-ems", out: "Full turnout gear and a real hose. You can already feel the heat.", next: "evening" },
+    { label: "EMT camp: run an ambulance call from start to finish", icon: "🚑", p: { S: 2, R: 1 }, f: { health: 2, safety: 1 }, b: "emt-paramedic", out: "Lights, sirens, and a patient who needs you. You're ready.", next: "evening" },
+    { label: "Culinary camp: cook in a professional kitchen", icon: "👩‍🍳", p: { A: 2, R: 1 }, f: { food: 3 }, b: "culinary", out: "You're already planning what you'd make on the final day.", next: "evening" },
+    { label: "Baking camp: cakes, bread, and pastry", icon: "🧁", p: { A: 3 }, f: { food: 3 }, b: "baking", out: "A whole week of frosting. You might never leave.", next: "evening" },
+    { label: "Welding camp: weld your own metal sign", icon: "⚡", p: { R: 3 }, f: { build: 3 }, b: "welding", out: "Sparks flying and something you made to take home. Yes.", next: "evening" },
+    { label: "Auto camp: diagnose and fix a real car", icon: "🚗", p: { R: 2, I: 1 }, f: { build: 3 }, b: "automotive", out: "You'll finally know what that check engine light means.", next: "evening" },
+    { label: "Heavy equipment camp: drive an excavator and a bulldozer", icon: "🚜", p: { R: 3 }, f: { build: 2, outdoors: 1 }, b: "heavy-equipment", out: "Driving an excavator at sixteen? That's going straight on your story.", next: "evening" },
+    { label: "Film camp: shoot and edit a short movie", icon: "🎬", p: { A: 3 }, f: { media: 3 }, b: "film", out: "You already have three ideas, and one of them is honestly genius.", next: "evening" },
+    { label: "Music camp: record a song in a real studio", icon: "🎤", p: { A: 2, R: 1 }, f: { media: 3 }, b: "music", out: "Studio headphones, a real mixing board, and your song. Let's go.", next: "evening" },
+    { label: "Fashion camp: design and sew your own outfit", icon: "👗", p: { A: 3 }, f: { art: 3 }, b: "fashion", out: "You're sketching outfits on the back of the flyer already.", next: "evening" },
+    { label: "Business camp: pitch a startup idea to real judges", icon: "💼", p: { E: 3 }, f: { business: 3 }, b: "business", out: "Winning prize money for an idea? Your pitch is already forming.", next: "evening" },
+    { label: "Sports camp: run game day for a college team", icon: "🏟️", p: { E: 2, S: 1 }, f: { sports: 3 }, b: "sports", out: "Running the scoreboard and the crowd for a real game sounds awesome.", next: "evening" },
+    { label: "Teaching camp: run activities for a preschool class", icon: "🧸", p: { S: 3 }, f: { helping: 3 }, b: "early-childhood", out: "Twelve four year olds and you. You're ready for anything.", next: "evening" },
   ];
 
   /* New scene before the ending: scrolling your phone. Narrows down the subject area. */
