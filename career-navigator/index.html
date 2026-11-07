@@ -63,6 +63,11 @@ header{display:flex;justify-content:space-between;align-items:center;gap:12px;fl
 .pay{display:grid;grid-template-columns:1fr 110px;gap:4px 12px;align-items:center;margin:8px 0}
 .paybar{height:14px;border-radius:999px;background:var(--c);width:0;transition:width .8s}.paybar.base{background:#c9ced8}
 .meter5{display:flex;gap:6px;margin:8px 0}.meter5 i{width:36px;height:12px;border-radius:999px;background:#e1e5ec}.meter5 i.on{background:var(--c)}
+.vid{display:flex;align-items:center;gap:16px;min-height:150px;padding:20px;border-radius:16px;margin:4px 0 16px;background:#1b2430 center/cover;color:#fff!important;text-decoration:none;font-weight:400}
+.vid .play{flex:none;width:64px;height:64px;border-radius:50%;background:var(--c);display:grid;place-items:center;font-size:26px;box-shadow:0 6px 18px rgba(0,0,0,.35);transition:transform .2s}
+.vid:hover .play{transform:scale(1.12)}
+.dl .step{display:flex;gap:14px;align-items:flex-start}
+.sky{flex:none;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:24px}
 .cert{display:inline-block;background:#f3f5f7;border:2px solid var(--c);border-radius:999px;padding:6px 14px;margin:4px 6px 4px 0;font-weight:600;font-size:14px}
 .news{border-left:4px solid var(--c);background:#f3f5f7;border-radius:0 12px 12px 0;padding:12px 14px;margin-bottom:10px}
 .news a,.links a,.match a:not(.btn){color:var(--c);font-weight:700}
@@ -91,6 +96,7 @@ input[type=range]{width:100%;accent-color:#2f6b3a}
 <script src="story.js"></script>
 <script src="athletics.js"></script>
 <script src="cert-links.js"></script>
+<script src="videos.js"></script>
 <script>
 const app=document.getElementById('app'),K=Object.keys(RIASEC);
 let score,name='',steps=0;
@@ -197,6 +203,10 @@ function mentor(S){
 
 /* ---------- results ---------- */
 const $$=n=>n==null?'Varies':'$'+n.toLocaleString();
+function sky(t){const m=/(\d+):?(\d*)\s*(AM|PM)/i.exec(t||'');if(!m)return['⏱️','linear-gradient(#cfe3f5,#eef4fa)'];let hr=+m[1]%12+(/PM/i.test(m[3])?12:0);
+ return hr<7?['🌅','linear-gradient(#f7b267,#f4845f)']:hr<11?['🌤️','linear-gradient(#9ad0f5,#d6ecfb)']:hr<15?['☀️','linear-gradient(#ffd85c,#ffef9f)']:hr<19?['🌇','linear-gradient(#f79d65,#f4c16b)']:['🌙','linear-gradient(#2b3a67,#4b5d8f)']}
+function dayVideo(p){const v=(window.VIDEOS||{})[p.id];if(!v)return'';
+ return`<a class="vid" href="${videoUrl(v[0])}" target="_blank" rel="noopener" style="${p.img?`background-image:linear-gradient(rgba(10,20,30,.45),rgba(10,20,30,.7)),url('${p.img}')`:''}"><span class="play">▶</span><span><b>Watch a real day on the job</b><br>${v[1]} · official career video from CareerOneStop, U.S. Department of Labor ↗</span></a>`}
 function card(p,pct){
  const max=Math.max(...p.careers.map(c=>c.pay||0),49500);
  const q=encodeURIComponent(p.careers[0].title.split(' (')[0].split(' or ')[0]);
@@ -204,7 +214,7 @@ function card(p,pct){
  ${p.img?`<img class="photo" src="${p.img}" alt="${p.name} students at Hocking College">`:''}<p>${p.pitch}</p>
  <div class="tabs">${['Overview','A Day in the Life','Careers and Pay','Certifications','Demand and Jobs','News and Highlights','Learn More'].map((t,i)=>`<button class="tab${i?'':' on'}" data-i="${i}">${t}</button>`).join('')}</div>
  <div class="pane on"><p>${p.about}</p><p><b>Program:</b> ${p.length}</p><p><b>Interest code:</b> ${Object.keys(p.riasec).map(k=>RIASEC[k].name).join(', ')}</p><h3>What you'll do</h3><ul>${p.doing.map(d=>`<li>${d}</li>`).join('')}</ul></div>
- <div class="pane"><p class="small">Tap each moment to live the day.</p><div class="tl">${p.day.map((d,i)=>`<div class="step${i?'':' seen'}"><b>${d.t}</b><br>${d.txt}</div>`).join('')}</div></div>
+ <div class="pane">${dayVideo(p)}<p class="small">Tap each moment to live the day.</p><div class="tl dl">${p.day.map((d,i)=>`<div class="step${i?'':' seen'}"><span class="sky" style="background:${sky(d.t)[1]}">${sky(d.t)[0]}</span><div><b>${d.t}</b><br>${d.txt}</div></div>`).join('')}</div></div>
  <div class="pane"><p class="small">National median yearly pay, May 2025, and projected job change 2025 to 2035 (U.S. Bureau of Labor Statistics).</p>
   ${p.careers.map(c=>`<div class="job"><b>${c.title}</b>${c.what}<div class="pay"><div class="paybar" data-w="${Math.round((c.pay||0)/max*100)}"></div><div><b>${$$(c.pay)}</b></div></div><span class="small">Job growth: <strong>${c.growth}</strong> · <a href="${c.src}" target="_blank" rel="noopener">${c.note}</a></span></div>`).join('')}
   <div class="pay"><div class="paybar base" data-w="${Math.round(49500/max*100)}"></div><div class="small">${$$(49500)} median for all U.S. jobs (May 2024)</div></div></div>
