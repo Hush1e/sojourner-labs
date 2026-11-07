@@ -10,6 +10,6 @@
 <div class="grid" id="cat"></div></main>
 <footer><div class="wrap">© 2026 Sojourner Labs. All rights reserved. · <a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a> · <a href="verify.html">Verify a certificate</a> · <a href="contact.html">Contact</a></div></footer>
 <script src="assets/config.js"></script><script>
-fetch('missions/catalog.json').then(r=>r.json()).then(L=>{document.getElementById('cat').innerHTML=L.map((m,i)=>`<a class="card" style="text-decoration:none;color:inherit" href="missions/${m.slug}.html"><span class="badge">${m.topic}</span>${i==0?'<span class="badge">Free demo</span>':''}<h3>${m.title}</h3><p>${m.blurb}</p><p class="sub" style="margin:12px 0 0">${m.rooms} rooms · about ${m.minutes} minutes</p></a>`).join('')});
+fetch('missions/catalog.json').then(r=>r.json()).then(L=>{document.getElementById('cat').innerHTML=L.map((m,i)=>`<a class="card" style="text-decoration:none;color:inherit" href="missions/${m.slug}.html${location.search}"><span class="badge">${m.topic}</span>${i==0?'<span class="badge">Free demo</span>':''}<h3>${m.title}</h3><p>${m.blurb}</p><p class="sub" style="margin:12px 0 0">${m.rooms} rooms · about ${m.minutes} minutes</p></a>`).join('')});
 </script>
 </body></html>

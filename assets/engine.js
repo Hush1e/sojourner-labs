@@ -61,7 +61,7 @@ function finish(){
   const name = who, max = M.rooms.length*100;
   const rec = {name, company: co, mission: M.title, score: score+'/'+max, time: $('#tm').textContent, code, date: d.toISOString()};
   $('#app').innerHTML = `<div class="card noprint"><h2>Mission complete</h2><p>Score ${score} of ${max} in ${rec.time}.</p>
-     <p id="sent" class="sub"></p><p><button class="btn" onclick="print()">Print or save certificate</button> <a class="btn ghost" href="../missions.html">More missions</a></p></div>`;
+     <p id="sent" class="sub"></p><p><button class="btn" onclick="print()">Print or save certificate</button> <a class="btn ghost" href="../missions.html${org?"?org="+encodeURIComponent(org):""}">More missions</a></p></div>`;
   $('#cert').innerHTML = `<p>SOJOURNER LABS</p><h2>Certificate of Completion</h2><p>This certifies that</p><h2>${esc(name)}</h2>
      ${co?`<p>of ${esc(co)}</p>`:''}<p>completed <b>${esc(M.title)}</b>, a mission in ${esc(M.topic.toLowerCase())}.</p>
      <p>${d.toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'})} · Score ${score}/${max}</p>
