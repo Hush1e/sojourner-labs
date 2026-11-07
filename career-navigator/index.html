@@ -73,6 +73,14 @@ header{display:flex;justify-content:space-between;align-items:center;gap:12px;fl
 .vcard{display:flex;flex-direction:column;gap:8px;text-decoration:none;color:#1b2430!important;font-weight:700;font-size:14px}.vcard .thumb{width:100%;height:110px}
 .vids{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-bottom:18px}
 @media(max-width:560px){.vid{flex-direction:column;align-items:flex-start}.thumb.big{width:100%}}
+.dstage{border-radius:16px;padding:22px 24px;min-height:210px;text-align:center;color:#1b2430;box-shadow:inset 0 0 0 2px rgba(0,0,0,.06)}
+.dflip{animation:dfl .45s ease}@keyframes dfl{0%{opacity:0;transform:translateX(30px)}100%{opacity:1;transform:none}}
+.dclock{display:inline-block;background:rgba(255,255,255,.85);border-radius:999px;padding:6px 14px;font-weight:800;font-size:18px}
+.dbig{font-size:56px;margin:8px 0}.dtxt{font-size:20px;font-weight:600;max-width:640px;margin:0 auto;background:rgba(255,255,255,.8);border-radius:12px;padding:12px 16px}
+.dstep{margin-top:10px;font-size:13px;font-weight:700;opacity:.7}
+.dnav .ghost{color:#1b2430;border-color:#c9ced6}
+.dnav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:12px 0 16px}.dnav .btn:disabled{opacity:.35;cursor:default}
+.ddots{display:flex;gap:8px}.ddot{width:14px;height:14px;border-radius:50%;border:2px solid var(--c);background:#fff;cursor:pointer;padding:0}.ddot.on{background:var(--c)}
 .dl .step{display:flex;gap:14px;align-items:flex-start}
 .sky{flex:none;width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:24px}
 #report{display:none}
@@ -238,11 +246,12 @@ function dayVideo(p){let v=(window.VIDEOS||{})[p.id];if(!v)return'';if(!Array.is
 function card(p,pct){
  const max=Math.max(...p.careers.map(c=>c.pay||0),49500);
  const q=encodeURIComponent(p.careers[0].title.split(' (')[0].split(' or ')[0]);
- return`<div class="card match" style="--c:${p.color}"><div class="ic">${p.icon}</div>${pct!=null?`<span class="pct">${pct}% match</span>`:''}<h2>${p.name}</h2>
+ return`<div class="card match" data-pid="${p.id}" style="--c:${p.color}"><div class="ic">${p.icon}</div>${pct!=null?`<span class="pct">${pct}% match</span>`:''}<h2>${p.name}</h2>
  ${p.img?`<img class="photo" src="${p.img}" alt="${p.name} students at Hocking College">`:''}<p>${p.pitch}</p>
  <div class="tabs">${['Overview','A Day in the Life','Careers and Pay','Certifications','Demand and Jobs','News and Highlights','Learn More'].map((t,i)=>`<button class="tab${i?'':' on'}" data-i="${i}">${t}</button>`).join('')}</div>
  <div class="pane on"><p>${p.about}</p><p><b>Program:</b> ${p.length}</p><p><b>Interest code:</b> ${Object.keys(p.riasec).map(k=>RIASEC[k].name).join(', ')}</p><h3>What you'll do</h3><ul>${p.doing.map(d=>`<li>${d}</li>`).join('')}</ul></div>
- <div class="pane">${dayVideo(p)}<p class="small">Tap each moment to live the day.</p><div class="tl dl">${p.day.map((d,i)=>`<div class="step${i?'':' seen'}"><span class="sky" style="background:${sky(d.t)[1]}">${sky(d.t)[0]}</span><div><b>${d.t}</b><br>${d.txt}</div></div>`).join('')}</div></div>
+ <div class="pane">${dayVideo(p)}<div class="dayp" data-i="0"><div class="dstage"></div><div class="dnav"><button class="btn ghost dprev">◀ Back</button><div class="ddots">${p.day.map((d,i)=>`<button class="ddot" data-j="${i}" title="${d.t}"></button>`).join('')}</div><button class="btn dnext">Next ➜</button></div></div>
+ <div class="tl dl dall" style="display:none">${p.day.map(d=>`<div class="step seen"><span class="sky" style="background:${sky(d.t)[1]}">${sky(d.t)[0]}</span><div><b>${d.t}</b><br>${d.txt}</div></div>`).join('')}</div></div>
  <div class="pane"><p class="small">National median yearly pay, May 2025, and projected job change 2025 to 2035 (U.S. Bureau of Labor Statistics).</p>
   ${p.careers.map(c=>`<div class="job"><b>${c.title}</b>${c.what}<div class="pay"><div class="paybar" data-w="${Math.round((c.pay||0)/max*100)}"></div><div><b>${$$(c.pay)}</b></div></div><span class="small">Job growth: <strong>${c.growth}</strong> · <a href="${c.src}" target="_blank" rel="noopener">${c.note}</a></span></div>`).join('')}
   <div class="pay"><div class="paybar base" data-w="${Math.round(49500/max*100)}"></div><div class="small">${$$(49500)} median for all U.S. jobs (May 2024)</div></div></div>
@@ -261,6 +270,16 @@ function card(p,pct){
   <li><a href="https://www.hocking.edu" target="_blank" rel="noopener">Hocking College home page: visits, admissions, and financial aid</a></li></ul></div>
  <p style="margin-top:16px"><a class="btn" style="background:${p.color};color:#fff" href="${p.url}" target="_blank" rel="noopener">Learn more about ${p.name} at Hocking</a></p></div>`}
 function wire(el){
+ el.querySelectorAll('.dayp').forEach(dp=>{const id=el.querySelector('.match')?.dataset.pid;const p=PROGRAMS.find(x=>x.id===dp.closest('.match').dataset.pid);if(!p)return;
+  const st=dp.querySelector('.dstage'),all=dp.nextElementSibling,n=p.day.length;
+  const draw=i=>{dp.dataset.i=i;const d=p.day[i],s=sky(d.t);
+   st.style.background=s[1];st.innerHTML=`<div class="dclock">${s[0]} ${d.t}</div><div class="dbig">${p.icon}</div><p class="dtxt">${d.txt}</p><div class="dstep">Moment ${i+1} of ${n}</div>`;
+   st.classList.remove('dflip');void st.offsetWidth;st.classList.add('dflip');
+   dp.querySelectorAll('.ddot').forEach((b,j)=>b.classList.toggle('on',j<=i));
+   dp.querySelector('.dprev').disabled=i===0;dp.querySelector('.dnext').textContent=i===n-1?'See the whole day ☰':'Next ➜'};
+  dp.querySelector('.dprev').onclick=()=>draw(Math.max(0,+dp.dataset.i-1));
+  dp.querySelector('.dnext').onclick=e=>{const i=+dp.dataset.i;if(all.style.display===''){all.style.display='none';draw(0)}else if(i<n-1)draw(i+1);else{all.style.display='';e.target.textContent='Replay the day ↺';all.scrollIntoView({behavior:'smooth',block:'nearest'})}};
+  dp.querySelectorAll('.ddot').forEach(b=>b.onclick=()=>draw(+b.dataset.j));draw(0)});
  const tabs=el.querySelectorAll('.tab'),panes=el.querySelectorAll('.pane');
  tabs.forEach(t=>t.onclick=()=>{tabs.forEach(x=>x.classList.remove('on'));panes.forEach(x=>x.classList.remove('on'));t.classList.add('on');panes[t.dataset.i].classList.add('on');
   panes[t.dataset.i].querySelectorAll('.paybar').forEach(b=>setTimeout(()=>b.style.width=b.dataset.w+'%',50))});
