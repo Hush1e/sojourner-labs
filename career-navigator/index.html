@@ -2,93 +2,247 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Career Navigator | Find Your Path at Hocking College</title>
+<title>The Longest Saturday | Hocking College Career Navigator</title>
 <style>
 :root{--ink:#fff;--gold:#f2c14e}
-*{box-sizing:border-box}body{margin:0;font:17px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);min-height:100vh;overflow-x:hidden;transition:background 1s}
+*{box-sizing:border-box}
+body{margin:0;font:17px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);min-height:100vh;overflow-x:hidden;transition:background 1.2s;background:#14482b}
 .bg-sunrise{background:linear-gradient(180deg,#ff9a62,#f6c667 45%,#5a8f5e)}
-.bg-forest{background:linear-gradient(180deg,#1f4d2c,#2f6b3a 50%,#173823)}
-.bg-creek{background:linear-gradient(180deg,#2d6f8f,#3f9a8a 55%,#1d4a3a)}
-.bg-trail{background:linear-gradient(180deg,#7a8fa6,#6f7f57 55%,#3d4a2f)}
-.bg-home{background:linear-gradient(180deg,#6a4c93,#a36cb0 55%,#3b2a57)}
+.bg-forest{background:linear-gradient(180deg,#5d8f6a,#2f6b3a 50%,#173823)}
 .bg-kitchen{background:linear-gradient(180deg,#c4602f,#e8944a 55%,#6b2f17)}
 .bg-tech{background:linear-gradient(180deg,#0b1030,#22205a 55%,#060818)}
+.bg-fair{background:linear-gradient(180deg,#5aa0e6,#9cd0f5 50%,#5f9a45)}
+.bg-storm{background:linear-gradient(180deg,#2c3440,#4a5563 50%,#1f2a24)}
+.bg-dusk{background:linear-gradient(180deg,#7b4f8f,#e48a5c 55%,#2d3b2a)}
+.bg-night,.bg-stars{background:linear-gradient(180deg,#070b22,#1d2a5a 65%,#0c1a14)}
 .bg-results{background:linear-gradient(180deg,#14482b,#0f3320)}
-.wrap{max-width:900px;margin:0 auto;padding:28px 20px 60px}
-header{display:flex;justify-content:space-between;align-items:center}
-.brand{font-weight:800;letter-spacing:.06em}.brand span{color:var(--gold)}
-.trail{display:flex;gap:6px;font-size:22px;min-height:32px}
-.trail span{animation:pop .4s}
-.art{font-size:clamp(54px,12vw,96px);text-align:center;margin:30px 0 10px;letter-spacing:.15em;filter:drop-shadow(0 6px 12px rgba(0,0,0,.35))}
+#scenery{position:fixed;inset:auto 0 0 0;height:45vh;z-index:0;pointer-events:none;opacity:.9}
+#scenery svg{width:100%;height:100%}
+.wrap{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:22px 20px 70px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-weight:800;letter-spacing:.06em;font-size:15px}.brand span{color:var(--gold)}
+.hud{display:flex;gap:4px;align-items:flex-end;height:34px;background:rgba(0,0,0,.3);padding:4px 8px;border-radius:10px}
+.hud div{width:16px;display:flex;flex-direction:column;align-items:center;font-size:10px;font-weight:800}
+.hud i{display:block;width:12px;border-radius:3px;transition:height .5s;min-height:2px}
+.chap{display:inline-block;background:rgba(0,0,0,.35);border-radius:999px;padding:4px 14px;font-size:13px;font-weight:700;letter-spacing:.05em;margin-top:18px;color:var(--gold)}
+.art{font-size:clamp(50px,11vw,88px);text-align:center;margin:18px 0 6px;letter-spacing:.12em;filter:drop-shadow(0 6px 12px rgba(0,0,0,.4))}
 .art span{display:inline-block;animation:float 3s ease-in-out infinite}
-.story{background:rgba(0,0,0,.35);backdrop-filter:blur(6px);border-radius:20px;padding:24px 28px;font-size:22px;font-weight:600;min-height:96px}
-.choices{display:grid;gap:14px;margin-top:20px}
-.choice{display:flex;gap:16px;align-items:center;text-align:left;background:rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.35);color:var(--ink);border-radius:16px;padding:16px 20px;font-size:18px;cursor:pointer;transition:transform .15s,background .15s;animation:rise .45s both}
-.choice:hover,.choice:focus{transform:translateY(-3px) scale(1.01);background:rgba(0,0,0,.45);outline:none;border-color:var(--gold)}
-.choice .i{font-size:34px}
-.btn{display:inline-block;background:var(--gold);color:#1b2a12;font-weight:800;border:0;border-radius:999px;padding:14px 26px;font-size:17px;cursor:pointer;text-decoration:none}
-.btn.ghost{background:transparent;color:var(--ink);border:2px solid rgba(255,255,255,.5)}
-.hero{text-align:center;padding-top:40px}.hero h1{font-size:clamp(34px,7vw,56px);line-height:1.1;margin:10px 0}
-.match{background:#fff;color:#1b2430;border-radius:22px;padding:28px;margin-top:20px;animation:rise .6s both;border-top:10px solid var(--c)}
-.match h2{margin:6px 0;font-size:30px}.match .ic{font-size:64px}
+.story{background:rgba(0,0,0,.42);backdrop-filter:blur(6px);border-radius:20px;padding:22px 26px;font-size:19px}
+.story p{margin:0 0 12px}.story p:last-child{margin:0;font-weight:700}
+.choices{display:grid;gap:12px;margin-top:18px}
+.choice{display:flex;gap:16px;align-items:center;text-align:left;background:rgba(0,0,0,.35);border:2px solid rgba(255,255,255,.35);color:var(--ink);border-radius:16px;padding:14px 18px;font-size:18px;cursor:pointer;transition:transform .15s,background .15s;animation:rise .45s both}
+.choice:hover,.choice:focus{transform:translateY(-3px) scale(1.01);background:rgba(0,0,0,.5);outline:none;border-color:var(--gold)}
+.choice .i{font-size:32px}
+.outcome{background:#fff;color:#1b2430;border-radius:18px;padding:20px 24px;margin-top:18px;animation:rise .4s both;border-left:8px solid var(--gold);font-size:18px}
+.pts{margin-top:8px;font-size:14px;font-weight:700;color:#556}
+.btn{display:inline-block;background:var(--gold);color:#1b2a12;font-weight:800;border:0;border-radius:999px;padding:13px 24px;font-size:17px;cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid rgba(255,255,255,.55)}
+.hero{text-align:center;padding-top:30px}.hero h1{font-size:clamp(34px,7vw,58px);line-height:1.08;margin:10px 0}
+.field{padding:13px 16px;border-radius:12px;border:0;font-size:18px;width:min(320px,100%);margin:8px}
+.small{font-size:13px;opacity:.85}
+.card{background:#fff;color:#1b2430;border-radius:22px;padding:26px;margin-top:20px;animation:rise .6s both}
+.card a{color:#2f6b3a;font-weight:700}
+.mentor{display:flex;gap:18px;align-items:center}.mentor .face{font-size:64px}
+.code{display:flex;gap:10px;justify-content:center;margin:14px 0}
+.code div{width:84px;height:84px;border-radius:18px;display:grid;place-items:center;font-size:44px;font-weight:900;color:#fff;animation:pop .5s both}
+.rbars .row{display:grid;grid-template-columns:150px 1fr 40px;gap:10px;align-items:center;margin:6px 0}
+.rbars .track{height:14px;background:#e6e9ee;border-radius:999px;overflow:hidden}.rbars .fill{height:100%;border-radius:999px;width:0;transition:width 1s}
+.match{border-top:10px solid var(--c)}
+.match h2{margin:6px 0;font-size:30px}.match .ic{font-size:60px}
+.photo{width:100%;max-height:260px;object-fit:cover;border-radius:14px;margin:10px 0}
 .pct{display:inline-block;background:var(--c);color:#fff;border-radius:999px;padding:4px 14px;font-weight:700;font-size:14px}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:14px}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin:16px 0 12px;border-bottom:2px solid #e6e9ee}
+.tab{background:none;border:0;padding:10px 12px;font-weight:700;color:#667;cursor:pointer;border-bottom:3px solid transparent;font-size:15px}
+.tab.on{color:var(--c);border-bottom-color:var(--c)}
+.pane{display:none;animation:rise .35s both}.pane.on{display:block}
 .job{background:#f3f5f7;border-radius:12px;padding:10px 14px;margin-bottom:8px}.job b{display:block}
-ul{padding-left:20px;margin:6px 0}
-.minis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:16px}
+.tl{border-left:4px solid var(--c);margin-left:10px;padding-left:20px}
+.tl .step{position:relative;margin-bottom:12px;background:#f3f5f7;border-radius:12px;padding:12px 14px;cursor:pointer;opacity:.35;transition:opacity .3s}
+.tl .step.seen{opacity:1}.tl .step:before{content:"";position:absolute;left:-31px;top:16px;width:14px;height:14px;border-radius:50%;background:var(--c)}
+.tl .step b{color:var(--c)}
+.pay{display:grid;grid-template-columns:1fr 110px;gap:4px 12px;align-items:center;margin:8px 0}
+.paybar{height:14px;border-radius:999px;background:var(--c);width:0;transition:width .8s}.paybar.base{background:#c9ced8}
+.meter5{display:flex;gap:6px;margin:8px 0}.meter5 i{width:36px;height:12px;border-radius:999px;background:#e1e5ec}.meter5 i.on{background:var(--c)}
+.cert{display:inline-block;background:#f3f5f7;border:2px solid var(--c);border-radius:999px;padding:6px 14px;margin:4px 6px 4px 0;font-weight:600;font-size:14px}
+.news{border-left:4px solid var(--c);background:#f3f5f7;border-radius:0 12px 12px 0;padding:12px 14px;margin-bottom:10px}
+.news a,.links a,.match a:not(.btn){color:var(--c);font-weight:700}
+.links li{margin:6px 0}
+.minis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:14px}
 .mini{background:rgba(255,255,255,.14);border:2px solid rgba(255,255,255,.25);border-radius:14px;padding:14px;cursor:pointer;color:var(--ink);text-align:left;font-size:15px}
 .mini:hover{border-color:var(--gold)}.mini .ic{font-size:32px}
 .bar{height:8px;background:rgba(255,255,255,.2);border-radius:999px;margin-top:8px;overflow:hidden}.bar i{display:block;height:100%;background:var(--gold)}
+input[type=range]{width:100%;accent-color:#2f6b3a}
 @keyframes float{50%{transform:translateY(-10px)}}
 @keyframes rise{from{opacity:0;transform:translateY(16px)}}
 @keyframes pop{from{transform:scale(0)}}
-@media(max-width:640px){.cols{grid-template-columns:1fr}.story{font-size:19px}}
+@keyframes rain{to{transform:translateY(60px)}}
+@keyframes twinkle{50%{opacity:.2}}
+@media(max-width:640px){.rbars .row{grid-template-columns:110px 1fr 34px}.story{font-size:17px}}
 </style>
 </head>
 <body class="bg-sunrise">
+<div id="scenery" aria-hidden="true"></div>
 <div class="wrap">
-  <header><div class="brand">HOCKING COLLEGE <span>CAREER NAVIGATOR</span></div><div class="trail" id="trail" aria-label="Your path so far"></div></header>
+  <header><div class="brand">HOCKING COLLEGE <span>CAREER NAVIGATOR</span></div><div class="hud" id="hud" title="Your interest profile so far"></div></header>
   <main id="app" aria-live="polite"></main>
 </div>
 <script src="data.js"></script>
+<script src="story.js"></script>
 <script>
-const app=document.getElementById('app'),trail=document.getElementById('trail');
-let picked=[];
-const setBg=b=>document.body.className='bg-'+b;
-const art=s=>[...s].length?Array.from(new Intl.Segmenter().segment(s),x=>x.segment).map((e,k)=>`<span style="animation-delay:${k*.3}s">${e}</span>`).join(''):'';
+const app=document.getElementById('app'),K=Object.keys(RIASEC);
+let score,name='',steps=0;
+const $=s=>document.querySelector(s);
+const fill=t=>t.replace(/\{name\}/g,name||'friend');
+const segs=s=>Array.from(new Intl.Segmenter().segment(s),x=>x.segment);
+const art=s=>segs(s).map((e,k)=>`<span style="animation-delay:${k*.3}s">${e}</span>`).join('');
+
+/* ---------- illustrated scenery (original SVG) ---------- */
+function scenery(bg){
+ const hills=(c1,c2)=>`<path d="M0 180 Q150 90 300 160 T600 140 T900 160 T1200 130 V300 H0Z" fill="${c1}"/><path d="M0 230 Q200 170 400 220 T800 210 T1200 220 V300 H0Z" fill="${c2}"/>`;
+ const trees=c=>Array.from({length:14},(_,i)=>{const x=40+i*85+(i%3)*12,h=60+(i*37%40);return`<polygon points="${x},${240-h} ${x-22},245 ${x+22},245" fill="${c}"/>`}).join('');
+ const town=`${[0,1,2,3,4,5,6,7,8,9].map(i=>`<rect x="${i*120+10}" y="${150+(i*53%60)}" width="90" height="${150-(i*53%60)}" fill="#3b3f4a"/>${[0,1,2].map(r=>`<rect x="${i*120+25+r*25}" y="${170+(i*53%60)}" width="12" height="16" fill="#f2c14e" opacity=".7"/>`).join('')}`).join('')}`;
+ const rain=Array.from({length:60},(_,i)=>`<line x1="${i*20}" y1="${(i*37)%200}" x2="${i*20-8}" y2="${(i*37)%200+22}" stroke="#cfe3ff" stroke-width="2" opacity=".6" style="animation:rain .6s linear ${i%10/10}s infinite"/>`).join('');
+ const stars=Array.from({length:70},(_,i)=>`<circle cx="${(i*173)%1200}" cy="${(i*97)%170}" r="${i%3?1.5:2.5}" fill="#fff" style="animation:twinkle ${2+i%3}s ${i%5/2}s infinite"/>`).join('');
+ const S={
+  sunrise:hills('#6fa86b','#3f7a45')+trees('#2f5e33'),
+  forest:hills('#3d7a48','#245a30')+trees('#153d1f')+trees('#1d4a27'),
+  kitchen:`<rect y="200" width="1200" height="100" fill="#5a2a14"/>${[1,2,3,4,5].map(i=>`<rect x="${i*200-60}" y="160" width="120" height="40" rx="6" fill="#999"/><circle cx="${i*200}" cy="150" r="18" fill="#ff8a3d" opacity=".8"/>`).join('')}`,
+  tech:`${Array.from({length:30},(_,i)=>`<rect x="${i*40}" y="${120+(i*31%120)}" width="3" height="${180-(i*31%120)}" fill="#38e1c6" opacity=".35"/>`).join('')}<rect y="260" width="1200" height="40" fill="#0b1030"/>`,
+  fair:hills('#7cbf5a','#5f9a45')+`<circle cx="900" cy="130" r="80" fill="none" stroke="#fff" stroke-width="6"/>${[0,1,2,3,4,5].map(i=>`<line x1="900" y1="130" x2="${900+80*Math.cos(i)}" y2="${130+80*Math.sin(i)}" stroke="#fff" stroke-width="3"/>`).join('')}<polygon points="200,200 260,120 320,200" fill="#e84c4c"/><polygon points="330,210 380,140 430,210" fill="#f2c14e"/>`,
+  storm:hills('#3a4a3a','#253025')+trees('#111c13')+rain,
+  dusk:hills('#4b5a3c','#2d3b2a')+trees('#1b261a')+`<rect x="500" y="215" width="220" height="20" rx="10" fill="#5a3b22" transform="rotate(-8 610 225)"/>`,
+  night:stars+town,
+  stars:stars+hills('#13241a','#0b170f'),
+  results:hills('#1f6b3c','#14482b'),
+ };
+ document.getElementById('scenery').innerHTML=`<svg viewBox="0 0 1200 300" preserveAspectRatio="xMidYMax slice">${S[bg]||''}</svg>`;
+ document.body.className='bg-'+bg;
+}
+
+/* ---------- live interest meter ---------- */
+function hud(){const m=Math.max(4,...K.map(k=>score[k]));document.getElementById('hud').innerHTML=K.map(k=>`<div><i style="height:${score[k]/m*22+2}px;background:${RIASEC[k].color}"></i>${k}</div>`).join('')}
+
+/* ---------- matching (cosine similarity) ---------- */
+function rank(){
+ const u=K.map(k=>score[k]),nu=Math.hypot(...u)||1;
+ return PROGRAMS.map(p=>{const v=K.map(k=>p.riasec[k]||0),nv=Math.hypot(...v);const d=u.reduce((s,x,i)=>s+x*v[i],0);return{p,pct:Math.round(d/(nu*nv)*100)}}).sort((a,b)=>b.pct-a.pct);
+}
 
 function welcome(){
-  picked=[];trail.innerHTML='';setBg('sunrise');
-  app.innerHTML=`<div class="hero"><div class="art">${art('🧭🌲🍳🩺💻')}</div>
-   <h1>What could your future look like?</h1>
-   <p style="font-size:20px;max-width:600px;margin:0 auto 26px">Make choices in a story about a day off. Every choice shapes your path, and at the end we will show you the Hocking College programs and careers that fit you best.</p>
-   <button class="btn" id="go">Start my adventure</button> <button class="btn ghost" id="all">Just show me the programs</button></div>`;
-  go.onclick=()=>scene('start');all.onclick=()=>results(true);
+ score=Object.fromEntries(K.map(k=>[k,0]));steps=0;hud();scenery('sunrise');
+ app.innerHTML=`<div class="hero"><div class="art">${art('🌅🥾🍳🩺💻🛡️')}</div>
+  <h1>The Longest Saturday</h1>
+  <p style="font-size:20px;max-width:640px;margin:0 auto 18px">A choose your own adventure career quiz. One wild day in Hocking County. About 10 big decisions. Every choice you make reveals what kind of work fits you, and at the end you'll get your career interest code and your best matching Hocking College programs.</p>
+  <input class="field" id="nm" placeholder="Your first name" maxlength="20"><br>
+  <button class="btn" id="go">Start the adventure</button> <button class="btn ghost" id="all">Just show me the programs</button>
+  <p class="small" style="margin-top:22px">Based on the Holland career interest model (RIASEC) used by the U.S. Department of Labor. Want the official version too? Try the free <a style="color:#f2c14e" href="https://www.mynextmove.org/explore/ip" target="_blank" rel="noopener">O*NET Interest Profiler</a>.</p></div>`;
+ $('#go').onclick=()=>{name=($('#nm').value.trim().split(' ')[0]||'');scene('start')};$('#all').onclick=()=>results(true);
 }
-function type(el,text,cb){let k=0;el.textContent='';const t=setInterval(()=>{el.textContent=text.slice(0,++k);if(k>=text.length){clearInterval(t);cb()}},18)}
+
+function type(el,paras,cb){
+ el.innerHTML=paras.map(()=>'<p></p>').join('');const ps=el.querySelectorAll('p');let i=0,k=0;
+ const t=setInterval(()=>{if(i>=paras.length){clearInterval(t);return cb()}ps[i].textContent=paras[i].slice(0,k+=3);if(k>=paras[i].length){i++;k=0}},16);
+ el.onclick=()=>{clearInterval(t);paras.forEach((p,j)=>ps[j].textContent=p);el.onclick=null;cb();cb=()=>{}};
+}
+
 function scene(id){
-  const S=SCENES[id];setBg(S.bg);
-  app.innerHTML=`<div class="art">${art(S.art)}</div><div class="story" id="st"></div><div class="choices" id="ch"></div>`;
-  type(st,S.text,()=>{ch.innerHTML=S.choices.map((c,k)=>`<button class="choice" style="animation-delay:${k*.12}s" data-k="${k}"><span class="i">${c.icon}</span>${c.label}</button>`).join('');
-    ch.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{const c=S.choices[b.dataset.k];picked.push(...c.tags);trail.insertAdjacentHTML('beforeend',`<span>${c.icon}</span>`);c.next==='end'?results():scene(c.next)})});
+ const S=SCENES[id];
+ if(S.type==='mentor')return mentor(S);
+ scenery(S.bg);window.scrollTo({top:0,behavior:'smooth'});
+ app.innerHTML=`${S.ch?`<div class="chap">${S.ch}</div>`:''}<div class="art">${art(S.art)}</div><div class="story" id="st" title="Tap to skip"></div><div class="choices" id="ch"></div><div id="oc"></div>`;
+ type($('#st'),S.text.map(fill),()=>choices(S));
 }
-function rank(){
-  return PROGRAMS.map(p=>{const s=picked.reduce((n,t)=>n+(p.tags.includes(t)?1:0),0);return{p,s}}).sort((a,b)=>b.s-a.s);
+function choices(S,after){
+ const ch=$('#ch');
+ ch.innerHTML=S.choices.map((c,k)=>`<button class="choice" style="animation-delay:${k*.1}s" data-k="${k}"><span class="i">${c.icon}</span>${fill(c.label)}</button>`).join('');
+ ch.querySelectorAll('.choice').forEach(b=>b.onclick=()=>{
+  const c=S.choices[b.dataset.k];
+  Object.entries(c.p).forEach(([k,v])=>score[k]+=v);steps++;hud();
+  ch.querySelectorAll('.choice').forEach(x=>{x.disabled=true;x.style.opacity=x===b?1:.3});
+  const go=()=>c.next==='end'?results():scene(c.next);
+  if(after)return after(c);
+  if(!c.out)return go();
+  const pts=Object.entries(c.p).map(([k,v])=>`+${v} ${RIASEC[k].name}`).join(' · ');
+  $('#oc').innerHTML=`<div class="outcome">${fill(c.out)}<div class="pts">${pts}</div><p style="margin:14px 0 0"><button class="btn" id="nx">Continue ➜</button></p></div>`;
+  $('#oc').scrollIntoView({behavior:'smooth',block:'nearest'});$('#nx').onclick=go;
+ });
 }
-function card(p,pct){return`<div class="match" style="--c:${p.color}"><div class="ic">${p.icon}</div>${pct!=null?`<span class="pct">${pct}% match</span>`:''}<h2>${p.name}</h2><p>${p.pitch}</p>
- <div class="cols"><div><h3>What you'll do</h3><ul>${p.doing.map(d=>`<li>${d}</li>`).join('')}</ul></div>
- <div><h3>Careers you could have</h3>${p.careers.map(c=>`<div class="job"><b>${c.title}</b>${c.what}</div>`).join('')}</div></div>
- <p style="margin-top:16px"><a class="btn" style="background:${p.color};color:#fff" href="https://www.hocking.edu/programs" target="_blank" rel="noopener">Learn more at hocking.edu</a></p></div>`}
+
+/* ---------- mentor encounter ---------- */
+function mentor(S){
+ scenery(S.bg);window.scrollTo({top:0,behavior:'smooth'});
+ const p=rank()[0].p,m=p.mentor,c0=p.careers[0];
+ app.innerHTML=`<div class="chap">${S.ch}</div><div class="art">${art('🏫🕯️'+p.icon)}</div>
+  <div class="story"><p>As you finish up, someone walks over to you. It's ${m.name}, ${m.role}.</p><p>${fill(m.hi)}</p><p>They have a few minutes to talk. What do you ask?</p></div>
+  <div class="choices" id="ch"></div><div id="oc"></div>`;
+ choices(S,c=>{
+  let body='';
+  if(c.show==='day')body=`<p>"Here's a real day for me."</p><div class="tl" style="--c:${p.color}">${p.day.map(d=>`<div class="step seen"><b>${d.t}</b><br>${d.txt}</div>`).join('')}</div>`;
+  if(c.show==='start')body=`<p>${m.start}</p><p>"It's ${p.length.toLowerCase()} at Hocking. You can earn ${p.certs.slice(0,2).join(' and ')} along the way."</p>`;
+  if(c.show==='pay')body=`<p>"Guess what a ${c0.title.toLowerCase()} earns in a year. Drag the slider."</p>
+   <input type="range" id="g" min="20000" max="150000" step="1000" value="50000"><p><b id="gv">$50,000</b></p><button class="btn" id="rv">Lock in my guess</button><div id="ans"></div>`;
+  $('#oc').innerHTML=`<div class="outcome" style="border-color:${p.color}">${body}<p id="cont" style="margin:14px 0 0;${c.show==='pay'?'display:none':''}"><button class="btn" id="nx">Continue ➜</button></p></div>`;
+  $('#nx').onclick=()=>scene(c.next);
+  if(c.show==='pay'){const g=$('#g');g.oninput=()=>$('#gv').textContent='$'+(+g.value).toLocaleString();
+   $('#rv').onclick=()=>{const d=+g.value-c0.pay,close=Math.abs(d)<8000;
+    $('#ans').innerHTML=`<p><b>${close?'Nice guess!':d<0?'Higher!':'A little lower.'}</b> The national median is <b>$${c0.pay.toLocaleString()}</b> a year (BLS, May 2024), and jobs are projected to change by <b>${c0.growth}</b> over ten years. Demand: <b>${p.demand.label}</b>. ${p.demand.why}</p>`;
+    $('#rv').remove();$('#cont').style.display='block'}}
+ });
+}
+
+/* ---------- results ---------- */
+const $$=n=>'$'+n.toLocaleString();
+function card(p,pct){
+ const max=Math.max(...p.careers.map(c=>c.pay),49500);
+ const q=encodeURIComponent(p.careers[0].title.split(' (')[0].split(' or ')[0]);
+ return`<div class="card match" style="--c:${p.color}"><div class="ic">${p.icon}</div>${pct!=null?`<span class="pct">${pct}% match</span>`:''}<h2>${p.name}</h2>
+ ${p.img?`<img class="photo" src="${p.img}" alt="${p.name} students at Hocking College">`:''}<p>${p.pitch}</p>
+ <div class="tabs">${['Overview','A Day in the Life','Careers and Pay','Certifications','Demand and Jobs','Industry News','Learn More'].map((t,i)=>`<button class="tab${i?'':' on'}" data-i="${i}">${t}</button>`).join('')}</div>
+ <div class="pane on"><p>${p.about}</p><p><b>Program:</b> ${p.length}</p><p><b>Interest code:</b> ${Object.keys(p.riasec).map(k=>RIASEC[k].name).join(', ')}</p><h3>What you'll do</h3><ul>${p.doing.map(d=>`<li>${d}</li>`).join('')}</ul></div>
+ <div class="pane"><p class="small">Tap each moment to live the day.</p><div class="tl">${p.day.map((d,i)=>`<div class="step${i?'':' seen'}"><b>${d.t}</b><br>${d.txt}</div>`).join('')}</div></div>
+ <div class="pane"><p class="small">National median yearly pay, May 2024, and projected job change 2024 to 2034 (U.S. Bureau of Labor Statistics).</p>
+  ${p.careers.map(c=>`<div class="job"><b>${c.title}</b>${c.what}<div class="pay"><div class="paybar" data-w="${Math.round(c.pay/max*100)}"></div><div><b>${$$(c.pay)}</b></div></div><span class="small">Job growth: <b>${c.growth}</b> · <a href="${c.src}" target="_blank" rel="noopener">${c.note}</a></span></div>`).join('')}
+  <div class="pay"><div class="paybar base" data-w="${Math.round(49500/max*100)}"></div><div class="small">${$$(49500)} median for all U.S. jobs</div></div></div>
+ <div class="pane"><p>Credentials students work toward in this program:</p>${p.certs.map(c=>`<span class="cert">🏅 ${c}</span>`).join('')}<p class="small" style="margin-top:12px">Check the program page for the current list.</p></div>
+ <div class="pane"><h3>How in demand is it?</h3><div class="meter5">${[1,2,3,4,5].map(n=>`<i class="${n<=p.demand.level?'on':''}"></i>`).join('')}</div><p><b>${p.demand.label}.</b> ${p.demand.why}</p>
+  <h3>Southeast Ohio</h3><p>${p.region.stat} <span class="small">(${p.region.year})</span></p>
+  <p><a class="btn" style="background:${p.color};color:#fff" href="${p.jobs}" target="_blank" rel="noopener">See current job openings near Hocking</a></p>
+  <p class="small">Opens a live job search within 50 miles of Nelsonville. Also try <a href="https://topjobs.ohio.gov" target="_blank" rel="noopener">Ohio's Top Jobs</a> and <a href="https://ohiomeansjobs.ohio.gov" target="_blank" rel="noopener">OhioMeansJobs</a>.</p></div>
+ <div class="pane">${p.news.map(n=>`<div class="news"><span class="small">${n.date} · ${n.src}</span><br>${n.title} <a href="${n.url}" target="_blank" rel="noopener">Read more</a></div>`).join('')}</div>
+ <div class="pane"><ul class="links">
+  <li><a href="${p.url}" target="_blank" rel="noopener">${p.name} at Hocking College</a>: courses, costs, and how to apply</li>
+  <li><a href="${p.careers[0].src}" target="_blank" rel="noopener">Occupational Outlook Handbook</a>: what the job is really like, from the U.S. Bureau of Labor Statistics</li>
+  <li><a href="https://www.onetonline.org/find/quick?s=${q}" target="_blank" rel="noopener">O*NET OnLine</a>: skills, tasks, and related careers</li>
+  <li><a href="https://www.careeronestop.org/Videos/CareerandClusterVideos/career-and-cluster-videos.aspx" target="_blank" rel="noopener">CareerOneStop career videos</a>: short videos of people doing the work</li>
+  <li><a href="https://www.mynextmove.org/explore/ip" target="_blank" rel="noopener">O*NET Interest Profiler</a>: the official free career interest test</li>
+  <li><a href="https://www.hocking.edu" target="_blank" rel="noopener">Hocking College home page: visits, admissions, and financial aid</a></li></ul></div>
+ <p style="margin-top:16px"><a class="btn" style="background:${p.color};color:#fff" href="${p.url}" target="_blank" rel="noopener">Learn more about ${p.name} at Hocking</a></p></div>`}
+function wire(el){
+ const tabs=el.querySelectorAll('.tab'),panes=el.querySelectorAll('.pane');
+ tabs.forEach(t=>t.onclick=()=>{tabs.forEach(x=>x.classList.remove('on'));panes.forEach(x=>x.classList.remove('on'));t.classList.add('on');panes[t.dataset.i].classList.add('on');
+  panes[t.dataset.i].querySelectorAll('.paybar').forEach(b=>setTimeout(()=>b.style.width=b.dataset.w+'%',50))});
+ el.querySelectorAll('.tl .step').forEach(s=>s.onclick=()=>{const n=s.nextElementSibling;if(n)n.classList.add('seen')});
+}
 function results(browse){
-  setBg('results');const R=rank(),max=Math.max(1,picked.length);
-  const show=id=>{const r=R.find(x=>x.p.id===id);document.getElementById('detail').innerHTML=card(r.p,browse?null:Math.round(r.s/max*100));document.getElementById('detail').scrollIntoView({behavior:'smooth'})};
-  app.innerHTML=`<div class="hero" style="padding-top:20px"><h1>${browse?'Explore Hocking programs':'Your best match'}</h1>${browse?'':'<p>Based on the choices you made.</p>'}</div>
-   <div id="detail"></div>
-   <h3 style="margin-top:30px">${browse?'Tap a program':'Other programs to explore'}</h3>
-   <div class="minis">${R.map(r=>`<button class="mini" data-id="${r.p.id}"><div class="ic">${r.p.icon}</div><b>${r.p.name}</b>${browse?'':`<div class="bar"><i style="width:${Math.round(r.s/max*100)}%"></i></div>`}</button>`).join('')}</div>
-   <p style="margin-top:30px;text-align:center"><button class="btn" id="again">Play again</button></p>`;
-  app.querySelectorAll('.mini').forEach(b=>b.onclick=()=>show(b.dataset.id));again.onclick=welcome;
-  show(R[0].p.id);if(browse)document.getElementById('detail').innerHTML='';
+ scenery('results');window.scrollTo({top:0});
+ const R=rank(),top=R[0].p,code=K.slice().sort((a,b)=>score[b]-score[a]).slice(0,3),mx=Math.max(1,...K.map(k=>score[k]));
+ const show=(id,scroll)=>{const r=R.find(x=>x.p.id===id),d=$('#detail');d.innerHTML=card(r.p,browse?null:r.pct);wire(d);if(scroll)d.scrollIntoView({behavior:'smooth'})};
+ app.innerHTML=browse?`<div class="hero" style="padding-top:20px"><h1>Explore Hocking programs</h1><p>Tap a program to see careers, pay, demand, and more.</p></div>`:
+ `<div class="hero" style="padding-top:10px"><div class="chap">Epilogue · Ten Years Later</div>
+  <div class="card" style="text-align:left;border-left:8px solid ${top.color}"><p style="font-size:19px;margin:0">${fill(name?name+', i':'I')}${top.future.slice(1)}</p></div>
+  <h1 style="margin-top:30px">Your Career Interest Code</h1>
+  <div class="code">${code.map((k,i)=>`<div style="background:${RIASEC[k].color};animation-delay:${i*.2}s">${k}</div>`).join('')}</div>
+  <p>${code.map(k=>`<b>${RIASEC[k].nick}</b>`).join(' · ')}</p></div>
+  <div class="card"><div class="rbars">${K.slice().sort((a,b)=>score[b]-score[a]).map(k=>`<div class="row"><a href="${RIASEC[k].url}" target="_blank" rel="noopener" style="color:${RIASEC[k].color}">${RIASEC[k].name}</a><div class="track"><div class="fill" style="background:${RIASEC[k].color}" data-w="${score[k]/mx*100}"></div></div><b>${score[k]}</b></div>`).join('')}</div>
+  ${code.map(k=>`<p><b style="color:${RIASEC[k].color}">${RIASEC[k].name}:</b> ${RIASEC[k].desc}</p>`).join('')}
+  <p class="small" style="color:#556">This is a fun interest activity, not a test score. For the official version, take the <a href="https://www.mynextmove.org/explore/ip" target="_blank" rel="noopener">O*NET Interest Profiler</a> and talk with your school counselor.</p></div>
+  <h2 style="margin-top:34px;text-align:center">Your best match at Hocking College</h2>`;
+ app.insertAdjacentHTML('beforeend',`<div id="detail"></div><h3 style="margin-top:30px">${browse?'All programs':'Your other matches'}</h3>
+  <div class="minis">${R.map(r=>`<button class="mini" data-id="${r.p.id}"><div class="ic">${r.p.icon}</div><b>${r.p.name}</b>${browse?'':`<div class="bar"><i style="width:${r.pct}%"></i></div><span class="small">${r.pct}% match</span>`}</button>`).join('')}</div>
+  <p style="margin-top:30px;text-align:center"><button class="btn" id="again">Play again with different choices</button></p>`);
+ app.querySelectorAll('.mini').forEach(b=>b.onclick=()=>show(b.dataset.id,true));$('#again').onclick=welcome;
+ if(!browse)show(top.id);
+ setTimeout(()=>app.querySelectorAll('.rbars .fill').forEach(f=>f.style.width=f.dataset.w+'%'),200);
 }
 welcome();
 </script>
