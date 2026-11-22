@@ -67,3 +67,10 @@ textarea.field{min-height:120px}
 .steps{counter-reset:s;list-style:none;padding:0}.steps li{counter-increment:s;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px 20px 20px 70px;margin-bottom:12px;position:relative}
 .steps li:before{content:counter(s);position:absolute;left:20px;top:18px;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--glow));color:#081020;font-weight:800;display:grid;place-items:center}
 table{width:100%;border-collapse:collapse}td,th{padding:10px;border-bottom:1px solid var(--line);text-align:left}
+
+/* Playable mission controls: keyboard, touch, narrow screens and reduced motion. */
+button.choice{font:inherit;color:var(--ink);text-align:left;width:100%}.choice span{display:block;color:var(--mute);margin-top:8px}.choice:disabled,.hot:disabled{cursor:default}
+button.hot{font:inherit;color:inherit;background:transparent;border:1px dashed currentColor;border-radius:4px;text-align:left;display:inline;padding:4px 6px;min-height:38px;line-height:1.6;overflow-wrap:anywhere}button.hot:hover{background:#ffe9a8;color:#1a1f33}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--warn);outline-offset:4px}.room h2:focus,#app h1:focus{outline:none}.field{margin-top:8px}.grid{grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr))}.hud{flex-wrap:wrap;gap:12px 24px}.scene,.email,.cert{overflow-wrap:anywhere}.cert .code{font-size:.85rem}.lesson .btn{margin-top:18px}#app .noprint .btn{margin:6px 8px 6px 0}
+@media(max-width:480px){.page h1{font-size:2rem}.room h2{font-size:1.6rem}.card,.scene{padding:18px}.cert{padding:24px 16px;border-width:5px}.cert h2{font-size:1.7rem}nav .wrap{gap:12px;min-height:60px;height:auto;padding-top:10px;padding-bottom:10px}.logo{font-size:.85rem}nav .btn{font-size:.8rem;padding:9px 12px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.card:hover{transform:none}}
